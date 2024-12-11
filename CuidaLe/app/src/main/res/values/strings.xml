@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CuidaLe</string>
+    <string name="botonInicioSesion">INICIAR SESION</string>
+    <string name="botonRegistro">REGISTRARME</string>
+    <string name="Usuario">Usuario o Correo Electronico</string>
+    <string name="Password">Introduce tu contraseña</string>
+    <string name="Farmacia">Farmacia</string>
+</resources>
