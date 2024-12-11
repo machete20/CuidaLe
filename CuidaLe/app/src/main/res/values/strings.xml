@@ -5,4 +5,13 @@
     <string name="Usuario">Usuario o Correo Electronico</string>
     <string name="Password">Introduce tu contraseña</string>
     <string name="Farmacia">Farmacia</string>
+    <string name="CE">Correo Electronico</string>
+    <string name="NU">Nombre de Usuario</string>
+    <string name="Contraseña">Contraseña</string>
+    <string name="RContraseña">Repita Contraseña</string>
+    <string name="DNI">DNI o Pasaporte</string>
+    <string name="registrarme">REGISTRARME</string>
+    <string name="errorVacioIS">Rellena Usuario y Contraseña</string>
+    <string name="errorVacioR">Rellena todos los campos</string>
+    <string name="errorContra">La contraseña no coincide!!</string>
 </resources>
