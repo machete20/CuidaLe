@@ -33,8 +33,13 @@ public class MainActivity extends AppCompatActivity {
         String usuario = usu.getText().toString();
         String contrasena = pass.getText().toString();
 
+
         if(usuario.isEmpty() || contrasena.isEmpty()){
             Toasty.error(this, getString(R.string.errorVacioIS)).show();
+        }else{
+            Intent intentp = new Intent(MainActivity.this, pantallaPrincip.class);
+            startActivity(intentp);
+
         }
     }
 }
