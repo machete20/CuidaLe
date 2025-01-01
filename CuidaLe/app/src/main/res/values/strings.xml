@@ -14,4 +14,16 @@
     <string name="errorVacioIS">Rellena Usuario y Contraseña</string>
     <string name="errorVacioR">Rellena todos los campos</string>
     <string name="errorContra">La contraseña no coincide!!</string>
+    <string name="Recetas">Recetas</string>
+    <string name="Farmacias">Farmacias</string>
+    <string name="Pastillero">Pastillero</string>
+    <string name="Recordatorios">Recordatorios</string>
+    <string name="Historial">Historial</string>
+    <string name="Calendario">Calendario</string>
+    <string name="DatosPersonales">Datos personales</string>
+    <string name="Seguridad">Seguridad</string>
+    <string name="Notificaciones">Notificaciones</string>
+    <string name="TemaOscuro">Tema oscuro</string>
+    <string name="Ayuda">Ayuda</string>
+    <string name="CerrarSesion">CERRAR SESION</string>
 </resources>
