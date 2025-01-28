@@ -26,4 +26,6 @@
     <string name="TemaOscuro">Tema oscuro</string>
     <string name="Ayuda">Ayuda</string>
     <string name="CerrarSesion">CERRAR SESION</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
