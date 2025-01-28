@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentInicioSes">
+    <fragment
+        android:id="@+id/fragmentInicioSes"
+        android:name="com.example.cuidale.FragmentInicioSes"
+        android:label="fragment_inicio_ses"
+        tools:layout="@layout/fragment_inicio_ses" >
+        <action
+            android:id="@+id/action_fragmentInicioSes_to_fragmentRegistro"
+            app:destination="@id/fragmentRegistro" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentRegistro"
+        android:name="com.example.cuidale.FragmentRegistro"
+        android:label="fragment_registro"
+        tools:layout="@layout/fragment_registro" />
 </navigation>
