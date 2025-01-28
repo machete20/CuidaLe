@@ -19,7 +19,7 @@
             android:name=".pantallaPrincip"
             android:exported="false" />
         <activity
-            android:name=".Registro"
+            android:name=".FragmentRegistro"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

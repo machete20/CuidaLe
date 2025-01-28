@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+
 public class FragmentInicioSes extends Fragment {
+
 
     private View v;
     private Button b1;
     private Button b2;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -25,7 +27,7 @@ public class FragmentInicioSes extends Fragment {
 
         b1.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_fragmentInicioSes_to_fragmentPrincip);
+            navController.navigate(R.id.action_fragmentInicioSes_to_fragmentPantPrinc);
         });
 
         b2.setOnClickListener(v->{
@@ -33,7 +35,6 @@ public class FragmentInicioSes extends Fragment {
             navController.navigate(R.id.action_fragmentInicioSes_to_fragmentRegistro);
         });
 
-        // Inflate the layout for this fragment
         return v;
     }
 }

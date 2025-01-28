@@ -11,13 +11,10 @@ import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
-<<<<<<< Updated upstream
     private Button bIni;
     private Button bRegi;
     private EditText usu;
     private EditText pass;
-=======
->>>>>>> Stashed changes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         pass =findViewById(R.id.contrasena);
     }
 
-<<<<<<< Updated upstream
     public void pantallaRegistro(View v){
         Intent intent = new Intent(MainActivity.this, Registro.class);
         startActivity(intent);
@@ -46,7 +42,4 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-=======
-
->>>>>>> Stashed changes
 }
