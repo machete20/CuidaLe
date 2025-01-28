@@ -13,8 +13,6 @@ import android.widget.Button;
 
 
 public class FragmentInicioSes extends Fragment {
-
-
     private View v;
     private Button b1;
     private Button b2;
