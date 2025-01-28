@@ -12,10 +12,18 @@
         <action
             android:id="@+id/action_fragmentInicioSes_to_fragmentRegistro"
             app:destination="@id/fragmentRegistro" />
+        <action
+            android:id="@+id/action_fragmentInicioSes_to_fragmentPantPrinc"
+            app:destination="@id/fragmentPantPrinc" />
     </fragment>
     <fragment
         android:id="@+id/fragmentRegistro"
         android:name="com.example.cuidale.FragmentRegistro"
         android:label="fragment_registro"
         tools:layout="@layout/fragment_registro" />
+    <fragment
+        android:id="@+id/fragmentPantPrinc"
+        android:name="com.example.cuidale.FragmentPantPrinc"
+        android:label="fragment_pant_princ"
+        tools:layout="@layout/fragment_pant_princ" />
 </navigation>
