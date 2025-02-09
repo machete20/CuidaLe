@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo"
     tools:context=".FragmentInicioSes">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,7 +64,7 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/logo" />
+            android:src="@drawable/logo" />
 
         <Button
             android:id="@+id/bRegistro"

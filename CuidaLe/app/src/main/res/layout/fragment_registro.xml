@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo"
+    android:onClick="registrarme"
     tools:context=".FragmentRegistro">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +38,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="LabelFor,SpeakableTextPresentCheck"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/textView4"
@@ -61,7 +64,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="LabelFor,SpeakableTextPresentCheck"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/textView5"
@@ -112,18 +116,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="LabelFor,SpeakableTextPresentCheck"
+            android:autofillHints="" />
 
         <Button
             android:id="@+id/bRegistroR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/boton"
-            android:onClick="registrarme"
             android:text="@string/registrarme"
             android:textColor="#000000"
             android:textStyle="bold"
-            app:cornerRadius="20px"
+            app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -143,7 +147,8 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="LabelFor,SpeakableTextPresentCheck"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/repiteContrasenaR"
@@ -156,7 +161,8 @@
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck"
+            android:autofillHints="" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

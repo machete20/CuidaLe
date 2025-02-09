@@ -25,5 +25,14 @@
         android:id="@+id/fragmentPantPrinc"
         android:name="com.example.cuidale.FragmentPantPrinc"
         android:label="fragment_pant_princ"
-        tools:layout="@layout/fragment_pant_princ" />
+        tools:layout="@layout/fragment_pant_princ" >
+        <action
+            android:id="@+id/action_fragmentPantPrinc_to_fragmentMenuDesplegable"
+            app:destination="@id/fragmentMenuDesplegable" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentMenuDesplegable"
+        android:name="com.example.cuidale.FragmentMenuDesplegable"
+        android:label="fragment_menu_desplegable"
+        tools:layout="@layout/fragment_menu_desplegable" />
 </navigation>
