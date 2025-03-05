@@ -21,7 +21,7 @@ public class FragmentAjustes extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_pant_princ,container,false);
+        v = inflater.inflate(R.layout.fragment_ajustes,container,false);
 
         datos = v.findViewById(R.id.TextDatosPersonales);
 
