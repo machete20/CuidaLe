@@ -37,7 +37,6 @@ public class FragmentPantPrinc extends Fragment {
             navController.navigate(R.id.action_fragmentPantPrinc_to_fragmentMenuDesplegable);
         });
 
-
         return v;
     }
 }
