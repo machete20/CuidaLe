@@ -20,7 +20,6 @@ public class FragmentPantPrinc extends Fragment {
 
     private ImageView cuenta;
     private ImageView menu;
-
     private CardView recetas;
     private CardView farmacias;
     private CardView pastillero;
@@ -37,7 +36,7 @@ public class FragmentPantPrinc extends Fragment {
 
         cuenta.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            //navController.navigate(R.id.fragment_cuenta);
+            navController.navigate(R.id.fragmentUsuarioCuidador);
         });
 
         menu = v.findViewById(R.id.IMGmenuPrincp);

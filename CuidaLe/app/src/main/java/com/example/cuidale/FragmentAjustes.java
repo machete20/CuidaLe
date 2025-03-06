@@ -37,14 +37,14 @@ public class FragmentAjustes extends Fragment {
 
         seguridad.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            //navController.navigate(R.id.fragment_seguridad);
+            navController.navigate(R.id.fragmentSeguridad);
         });
 
         ayuda = v.findViewById(R.id.TextAyuda);
 
         ayuda.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            //navController.navigate(R.id.fragment_ayuda);
+            navController.navigate(R.id.fragmentAyuda);
         });
 
         atras = v.findViewById(R.id.btn_retrocesoAjustes);

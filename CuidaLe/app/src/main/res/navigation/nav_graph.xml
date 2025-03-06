@@ -43,7 +43,17 @@
         android:id="@+id/fragmentAjustes"
         android:name="com.example.cuidale.FragmentAjustes"
         android:label="fragment_ajustes"
-        tools:layout="@layout/fragment_ajustes" />
+        tools:layout="@layout/fragment_ajustes" >
+        <action
+            android:id="@+id/action_fragmentAjustes_to_fragmentAyuda"
+            app:destination="@id/fragmentAyuda" />
+        <action
+            android:id="@+id/action_fragmentAjustes_to_fragmentSeguridad"
+            app:destination="@id/fragmentSeguridad" />
+        <action
+            android:id="@+id/action_fragmentAjustes_to_fragmentDatosPersonales"
+            app:destination="@id/fragmentDatosPersonales" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentDatosPersonales"
         android:name="com.example.cuidale.FragmentDatosPersonales"
@@ -54,4 +64,16 @@
         android:name="com.example.cuidale.FragmentUsuario"
         android:label="fragment_usuario"
         tools:layout="@layout/fragment_usuario" />
+    <fragment
+        android:id="@+id/fragmentAyuda"
+        android:name="com.example.cuidale.FragmentAyuda"
+        android:label="FragmentAyuda" />
+    <fragment
+        android:id="@+id/fragmentSeguridad"
+        android:name="com.example.cuidale.FragmentSeguridad"
+        android:label="FragmentSeguridad" />
+    <fragment
+        android:id="@+id/fragmentUsuarioCuidador"
+        android:name="com.example.cuidale.FragmentUsuarioCuidador"
+        android:label="FragmentUsuarioCuidador" />
 </navigation>
