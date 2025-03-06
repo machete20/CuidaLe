@@ -44,4 +44,14 @@
         android:name="com.example.cuidale.FragmentAjustes"
         android:label="fragment_ajustes"
         tools:layout="@layout/fragment_ajustes" />
+    <fragment
+        android:id="@+id/fragmentDatosPersonales"
+        android:name="com.example.cuidale.FragmentDatosPersonales"
+        android:label="fragment_datos_personales"
+        tools:layout="@layout/fragment_datos_personales" />
+    <fragment
+        android:id="@+id/fragmentUsuario"
+        android:name="com.example.cuidale.FragmentUsuario"
+        android:label="fragment_usuario"
+        tools:layout="@layout/fragment_usuario" />
 </navigation>
