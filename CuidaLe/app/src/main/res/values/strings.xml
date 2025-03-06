@@ -8,6 +8,7 @@
     <string name="Apellido">Primer Apellido</string>
     <string name="Apellido2">Segundo Apellido</string>
     <string name="Direccion">Direccion</string>
+    <string name="Guardar">Guardar</string>
     <string name="Farmacia">Farmacia</string>
     <string name="CE">Correo Electronico</string>
     <string name="NU">Nombre de Usuario</string>
