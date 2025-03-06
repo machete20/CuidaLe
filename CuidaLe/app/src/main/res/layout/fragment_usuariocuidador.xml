@@ -58,7 +58,7 @@
                 android:scaleType="centerCrop"
                 android:background="@drawable/rounded_corner_white"/>
         </FrameLayout>
-
+A
         <!-- User Details -->
         <TextView
             android:layout_width="wrap_content"
