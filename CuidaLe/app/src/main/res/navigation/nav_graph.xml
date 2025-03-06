@@ -34,5 +34,14 @@
         android:id="@+id/fragmentMenuDesplegable"
         android:name="com.example.cuidale.FragmentMenuDesplegable"
         android:label="fragment_menu_desplegable"
-        tools:layout="@layout/fragment_menu_desplegable" />
+        tools:layout="@layout/fragment_menu_desplegable" >
+        <action
+            android:id="@+id/action_fragmentMenuDesplegable_to_fragmentAjustes"
+            app:destination="@id/fragmentAjustes" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentAjustes"
+        android:name="com.example.cuidale.FragmentAjustes"
+        android:label="fragment_ajustes"
+        tools:layout="@layout/fragment_ajustes" />
 </navigation>

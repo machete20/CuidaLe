@@ -71,16 +71,17 @@
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="150dp"
+                    android:layout_height="170dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center"
                         android:layout_margin="10sp"
-                        android:src="@tools:sample/avatars" />
+                        android:src="@drawable/receta" />
 
                     <TextView
                         android:id="@+id/RecetasPrincp"
@@ -109,16 +110,17 @@
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="150dp"
+                    android:layout_height="170dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center"
                         android:layout_margin="10sp"
-                        android:src="@tools:sample/avatars" />
+                        android:src="@drawable/farmacia" />
 
                     <TextView
                         android:id="@+id/FarmaciasPrincp"
@@ -148,16 +150,17 @@
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="150dp"
+                    android:layout_height="170dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center"
                         android:layout_margin="10sp"
-                        android:src="@tools:sample/avatars" />
+                        android:src="@drawable/pastillero" />
 
                     <TextView
                         android:id="@+id/PastilleroPrincp"
@@ -187,16 +190,17 @@
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="150dp"
+                    android:layout_height="170dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center"
                         android:layout_margin="10sp"
-                        android:src="@tools:sample/avatars" />
+                        android:src="@drawable/recordatorio" />
 
                     <TextView
                         android:id="@+id/RecordatorioPrincp"
@@ -226,22 +230,24 @@
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="150dp"
+                    android:layout_height="170dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
                         android:layout_margin="10sp"
-                        android:src="@tools:sample/avatars" />
+                        android:src="@drawable/historial" />
 
                     <TextView
                         android:id="@+id/HistorialPrincp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="5sp"
                         android:text="@string/Historial"
                         android:textAlignment="center"
@@ -265,16 +271,17 @@
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="150dp"
+                    android:layout_height="170dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center"
                         android:layout_margin="10sp"
-                        android:src="@tools:sample/avatars" />
+                        android:src="@drawable/calendario" />
 
                     <TextView
                         android:id="@+id/CalendarioPrincp"
@@ -282,7 +289,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="5sp"
-                        android:text="@string/Historial"
+                        android:text="@string/Calendario"
                         android:textAlignment="center"
                         android:textSize="22sp"
                         android:textStyle="bold" />
