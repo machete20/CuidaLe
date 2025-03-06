@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".FragmentAjustes">
 
+    <ImageButton
+        android:id="@+id/btn_retrocesoAjustes"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_light_blue"
+        android:padding="8dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
