@@ -9,36 +9,26 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
 
-public class FragmentMenuDesplegable extends Fragment {
+public class FragmentDatosPersonales extends Fragment {
 
     private View v;
-
-    private ImageView ajustes;
-
-    private ImageView menuCerrar;
-
+    private ImageButton atras;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_menu_desplegable,container,false);
+        v= inflater.inflate(R.layout.fragment_datos_personales, container, false);
 
-        ajustes = v.findViewById(R.id.BotonAjustes);
+        atras = v.findViewById(R.id.btn_retrocesoDatos);
 
-        ajustes.setOnClickListener(v->{
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.fragmentAjustes);
-        });
-
-        menuCerrar = v.findViewById(R.id.menuCerra);
-
-        menuCerrar.setOnClickListener(v->{
+        atras.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
             navController.popBackStack();
         });
-
         return v;
     }
 }

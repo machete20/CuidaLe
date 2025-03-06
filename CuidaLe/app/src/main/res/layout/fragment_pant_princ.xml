@@ -20,6 +20,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/rounded_light_blue"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/BarraArribaPrincp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_corner_white"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/defaultprofile" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_1_name"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_1_location"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/BarraArribaPrincp"
                 android:layout_width="wrap_content"
@@ -67,7 +108,7 @@
                 android:backgroundTint="@color/boton"
                 app:cardCornerRadius="15dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/BarraArribaPrincp">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
 
                 <LinearLayout
@@ -106,7 +147,7 @@
                 android:backgroundTint="@color/boton"
                 app:cardCornerRadius="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/BarraArribaPrincp">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
 
                 <LinearLayout
