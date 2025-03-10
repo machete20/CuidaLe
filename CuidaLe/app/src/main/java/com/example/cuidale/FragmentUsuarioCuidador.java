@@ -10,17 +10,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class FragmentUsuarioCuidador extends Fragment {
 
     private View v;
 
     private ImageButton atras;
+
+    private ImageView menu;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         v= inflater.inflate(R.layout.fragment_usuariocuidador, container, false);
+
+        menu = v.findViewById(R.id.menuDesplegableUsuario);
+
+        menu.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentMenuDesplegable);
+        });
 
         atras = v.findViewById(R.id.btn_retroceso);
 

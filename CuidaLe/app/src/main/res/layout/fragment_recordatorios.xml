@@ -42,7 +42,7 @@
                     android:background="@color/boton">
 
                     <ImageView
-                        android:id="@+id/IMGmenuPrincp"
+                        android:id="@+id/menuDesplegableRecordatorios"
                         android:layout_width="40sp"
                         android:layout_height="40sp"
                         android:layout_margin="4dp"
@@ -52,7 +52,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/IMGcuentaPrincp"
+                        android:id="@+id/IMGcuentaPrincpRecordatorios"
                         android:layout_width="40sp"
                         android:layout_height="40sp"
                         android:layout_margin="4dp"
