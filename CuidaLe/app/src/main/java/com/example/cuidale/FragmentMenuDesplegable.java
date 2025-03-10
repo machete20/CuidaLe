@@ -18,6 +18,10 @@ public class FragmentMenuDesplegable extends Fragment {
 
     private ImageView ajustes;
 
+    private ImageView menuCerrar;
+
+    private ImageView cuenta;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,6 +34,19 @@ public class FragmentMenuDesplegable extends Fragment {
             navController.navigate(R.id.fragmentAjustes);
         });
 
+        menuCerrar = v.findViewById(R.id.menuCerra);
+
+        menuCerrar.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.popBackStack();
+        });
+
+        cuenta = v.findViewById(R.id.CuentaMenu);
+
+        cuenta.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentUsuarioCuidador);
+        });
 
         return v;
     }

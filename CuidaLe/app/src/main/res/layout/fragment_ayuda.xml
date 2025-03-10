@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo"
+    android:orientation="vertical">
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:text="AYUDA"
+        android:textColor="@android:color/black"
+        android:textSize="50dp"
+        android:textStyle="bold" />
+
+    <!-- Extra space to push content down -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <!-- First Option -->
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="16dp"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="@string/InformarProblema"
+        android:textColor="@android:color/black"
+        android:textSize="32sp" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@android:color/darker_gray" />
+
+    <!-- Space between options -->
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <!-- Second Option -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="16dp"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="@string/ServicioAyuda"
+        android:textColor="@android:color/black"
+        android:textSize="32sp" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@android:color/darker_gray" />
+
+    <!-- Espacio para empujar el botón hacia abajo -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/btn_retrocesoAyuda"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_light_blue"
+        android:padding="8dp"
+        android:src="@drawable/ic_back"
+        tools:ignore="SpeakableTextPresentCheck" />
+</LinearLayout>
