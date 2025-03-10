@@ -26,21 +26,21 @@ public class FragmentAjustes extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_ajustes,container,false);
 
-        datos = v.findViewById(R.id.TextDatosPersonales);
+        datos = v.findViewById(R.id.Texto1);
 
         datos.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentDatosPersonales);
         });
 
-        seguridad = v.findViewById(R.id.TextSeguridad);
+        seguridad = v.findViewById(R.id.Texto2);
 
         seguridad.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentSeguridad);
         });
 
-        ayuda = v.findViewById(R.id.TextAyuda);
+        ayuda = v.findViewById(R.id.Texto5);
 
         ayuda.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
