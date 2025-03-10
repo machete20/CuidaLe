@@ -25,6 +25,12 @@ public class FragmentMenuDesplegable extends Fragment {
 
     private TextView recordatorio;
 
+    private TextView pastillero;
+
+    private TextView recetas;
+
+    private TextView historial;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +63,28 @@ public class FragmentMenuDesplegable extends Fragment {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentRecordatorios);
         });
+
+        pastillero = v.findViewById(R.id.PastilleroMenu);
+
+        pastillero.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentPastillero);
+        });
+
+        recetas = v.findViewById(R.id.RecetasMenu);
+
+        recetas.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentRecetas);
+        });
+
+        historial = v.findViewById(R.id.HistorialMenu);
+
+        historial.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentHistorial);
+        });
+
 
         return v;
     }

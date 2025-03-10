@@ -80,4 +80,17 @@
         android:id="@+id/fragmentRecordatorios"
         android:name="com.example.cuidale.FragmentRecordatorios"
         android:label="FragmentRecordatorios" />
+    <fragment
+        android:id="@+id/fragmentPastillero"
+        android:name="com.example.cuidale.FragmentPastillero"
+        android:label="FragmentPastillero" />
+    <fragment
+        android:id="@+id/fragmentRecetas"
+        android:name="com.example.cuidale.FragmentRecetas"
+        android:label="FragmentRecetas" />
+    <fragment
+        android:id="@+id/fragmentHistorial"
+        android:name="com.example.cuidale.FragmentHistorial"
+        android:label="fragment_historial"
+        tools:layout="@layout/fragment_historial" />
 </navigation>
