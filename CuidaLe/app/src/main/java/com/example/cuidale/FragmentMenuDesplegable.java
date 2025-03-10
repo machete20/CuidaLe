@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class FragmentMenuDesplegable extends Fragment {
@@ -21,6 +22,8 @@ public class FragmentMenuDesplegable extends Fragment {
     private ImageView menuCerrar;
 
     private ImageView cuenta;
+
+    private TextView recordatorio;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +49,13 @@ public class FragmentMenuDesplegable extends Fragment {
         cuenta.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentUsuarioCuidador);
+        });
+
+        recordatorio = v.findViewById(R.id.RecordatorioMenu);
+
+        recordatorio.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentRecordatorios);
         });
 
         return v;

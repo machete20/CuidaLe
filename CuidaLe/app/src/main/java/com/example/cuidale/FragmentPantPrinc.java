@@ -71,7 +71,7 @@ public class FragmentPantPrinc extends Fragment {
 
         recordatorios.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            //navController.navigate(R.id.fragmentRecordatorios);
+            navController.navigate(R.id.fragmentRecordatorios);
         });
 
         historial = v.findViewById(R.id.CardHistorial);

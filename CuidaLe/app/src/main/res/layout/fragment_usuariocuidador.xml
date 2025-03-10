@@ -23,7 +23,7 @@
             android:background="#B3E5FC">
 
             <ImageView
-                android:id="@+id/IMGmenuPrincp"
+                android:id="@+id/menuDesplegableUsuario"
                 android:layout_width="40sp"
                 android:layout_height="40sp"
                 android:layout_margin="4dp"
@@ -41,7 +41,8 @@
         android:layout_marginHorizontal="16dp"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        tools:ignore="ExtraText">
 
         <!-- Profile Image -->
         <FrameLayout

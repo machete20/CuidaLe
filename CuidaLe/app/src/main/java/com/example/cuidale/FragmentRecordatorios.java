@@ -1,5 +1,6 @@
 package com.example.cuidale;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-public class FragmentUsuarioCuidador extends Fragment {
+public class FragmentRecordatorios extends Fragment {
 
     private View v;
 
@@ -20,25 +21,33 @@ public class FragmentUsuarioCuidador extends Fragment {
 
     private ImageView menu;
 
+    private ImageView cuenta;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        v= inflater.inflate(R.layout.fragment_usuariocuidador, container, false);
+        v= inflater.inflate(R.layout.fragment_recordatorios, container, false);
+        atras = v.findViewById(R.id.btn_retrocesoRecordatorios);
 
-        menu = v.findViewById(R.id.menuDesplegableUsuario);
+        atras.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.popBackStack();
+        });
+
+        menu = v.findViewById(R.id.menuDesplegableRecordatorios);
 
         menu.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentMenuDesplegable);
         });
 
-        atras = v.findViewById(R.id.btn_retroceso);
+        cuenta = v.findViewById(R.id.IMGcuentaPrincpRecordatorios);
 
-        atras.setOnClickListener(v->{
+        cuenta.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            navController.popBackStack();
+            navController.navigate(R.id.fragmentUsuarioCuidador);
         });
+
         return v;
     }
 }
