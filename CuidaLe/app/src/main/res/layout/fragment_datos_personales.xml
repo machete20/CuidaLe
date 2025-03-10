@@ -16,7 +16,9 @@
         android:fontFamily="serif"
         android:text="@string/DatosPersonales"
         android:textAlignment="center"
-        android:textSize="48sp"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="50dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -194,7 +196,7 @@
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/Logo"
             android:layout_width="0dp"
             android:layout_height="53dp"
             android:layout_weight="1"

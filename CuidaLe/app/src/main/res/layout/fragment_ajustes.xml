@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo"
     tools:context=".FragmentAjustes">
 
     <ImageButton
@@ -21,13 +22,16 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/Titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:fontFamily="cursive"
+        android:fontFamily="serif"
         android:text="@string/Ajustes"
-        android:textSize="70sp"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="50dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +48,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/Titulo"
         tools:ignore="LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <EditText
@@ -57,7 +61,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextDatosPersonales"
+        app:layout_constraintTop_toBottomOf="@+id/Texto1"
         tools:ignore="Autofill,LabelFor,MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <EditText
@@ -70,7 +74,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextSeguridad"
+        app:layout_constraintTop_toBottomOf="@+id/Texto2"
         tools:ignore="Autofill,LabelFor,MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <EditText
@@ -83,7 +87,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextNotificaciones"
+        app:layout_constraintTop_toBottomOf="@+id/Texto3"
         tools:ignore="Autofill,LabelFor,MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <EditText
@@ -96,7 +100,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextAyuda"
+        app:layout_constraintTop_toBottomOf="@+id/Texto5"
         tools:ignore="Autofill,LabelFor,MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <EditText
@@ -109,39 +113,39 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextTemaOscuro"
+        app:layout_constraintTop_toBottomOf="@+id/Texto4"
         tools:ignore="Autofill,LabelFor,MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/TextDatosPersonales"
+        android:id="@+id/Texto1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         android:text="@string/DatosPersonales"
-        android:textSize="30sp"
+        android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linea" />
 
     <TextView
-        android:id="@+id/TextSeguridad"
+        android:id="@+id/Texto2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         android:text="@string/Seguridad"
-        android:textSize="30sp"
+        android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linea2" />
 
     <TextView
-        android:id="@+id/TextNotificaciones"
+        android:id="@+id/Texto3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         android:text="@string/Notificaciones"
-        android:textSize="30sp"
+        android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linea3" />
 
@@ -149,43 +153,45 @@
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#ACACAC"
+        android:foregroundTint="@color/sky_blue"
+        android:thumbTint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/linea4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/TextNotificaciones"
-        app:layout_constraintTop_toBottomOf="@+id/linea3"
-        tools:ignore="DuplicateSpeakableTextCheck,MissingConstraints,TouchTargetSizeCheck,UseSwitchCompatOrMaterialXml" />
+        app:layout_constraintStart_toEndOf="@+id/Texto3"
+        app:layout_constraintTop_toBottomOf="@+id/linea3" />
+
 
     <Switch
         android:id="@+id/switch2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#ACACAC"
+        android:foregroundTint="@color/sky_blue"
+        android:thumbTint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/linea7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/TextNotificaciones"
+        app:layout_constraintStart_toEndOf="@+id/Texto3"
         app:layout_constraintTop_toBottomOf="@+id/linea4"
         tools:ignore="MissingConstraints,TouchTargetSizeCheck,UseSwitchCompatOrMaterialXml" />
 
     <TextView
-        android:id="@+id/TextTemaOscuro"
+        android:id="@+id/Texto4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         android:text="@string/TemaOscuro"
-        android:textSize="30sp"
+        android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linea4" />
 
     <TextView
-        android:id="@+id/TextAyuda"
+        android:id="@+id/Texto5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         android:text="@string/Ayuda"
-        android:textSize="30sp"
+        android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linea7" />
 

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CuidaLe</string>
-    <string name="botonInicioSesion">INICIAR SESION</string>
-    <string name="botonRegistro">REGISTRARME</string>
+    <string name="botonInicioSesion">Iniciar sesion</string>
+    <string name="botonRegistro">Registrarme</string>
     <string name="Usuario">Usuario o Correo Electronico</string>
     <string name="Password">Introduce tu contraseña</string>
     <string name="Nombre">Nombre Completo</string>
@@ -15,7 +15,7 @@
     <string name="Contraseña">Contraseña</string>
     <string name="RContraseña">Repita Contraseña</string>
     <string name="DNI">DNI o Pasaporte</string>
-    <string name="registrarme">REGISTRARME</string>
+    <string name="registrarme">Registrarme</string>
     <string name="errorVacioIS">Rellena Usuario y Contraseña</string>
     <string name="errorVacioR">Rellena todos los campos</string>
     <string name="errorContra">La contraseña no coincide!!</string>
@@ -25,12 +25,12 @@
     <string name="Recordatorios">Recordatorios</string>
     <string name="Historial">Historial</string>
     <string name="Calendario">Calendario</string>
-    <string name="DatosPersonales">Datos personales</string>
-    <string name="Seguridad">Seguridad</string>
     <string name="Notificaciones">Notificaciones</string>
     <string name="TemaOscuro">Tema oscuro</string>
     <string name="Ayuda">Ayuda</string>
     <string name="Ajustes">Ajustes</string>
+    <string name="DatosPersonales">Datos personales</string>
+    <string name="Seguridad">Seguridad</string>
     <string name="CerrarSesion">CERRAR SESION</string>
 
 
@@ -50,17 +50,19 @@
     <string name="contact_2_name">Antonia Sanchez</string>
     <string name="contact_2_location">Vera, Almería</string>
 
+    <!-- STRINGS FRAGMENT AJUSTES -->
+
+
     <!-- STRINGS FRAGMENT AYUDA -->
     <string name="InformarProblema">Informar de un problema</string>
     <string name="ServicioAyuda">Servicio de ayuda</string>
 
     <!-- STRINGS FRAGMENT SEGURIDAD -->
-    <string name="title_security">SEGURIDAD</string>
-    <string name="change_password">Cambiar contraseña</string>
-    <string name="two_step_auth">Autenticación en dos pasos</string>
-    <string name="login_alerts">Alertas de inicio de sesión</string>
-    <string name="saved_login">Inicio de sesión guardado</string>
-    <string name="where_logged_in">Donde has iniciado sesión</string>
+    <string name="CambiarContrasena">Cambiar contraseña</string>
+    <string name="AuntenticacionDosPasos">Autenticación en dos pasos</string>
+    <string name="AlertasLogin">Alertas de inicio de sesión</string>
+    <string name="LoginGuardado">Inicio de sesión guardado</string>
+    <string name="DondeLogin">Donde has iniciado sesión</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
