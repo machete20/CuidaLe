@@ -76,4 +76,8 @@
         android:id="@+id/fragmentUsuarioCuidador"
         android:name="com.example.cuidale.FragmentUsuarioCuidador"
         android:label="FragmentUsuarioCuidador" />
+    <fragment
+        android:id="@+id/fragmentRecordatorios"
+        android:name="com.example.cuidale.FragmentRecordatorios"
+        android:label="FragmentRecordatorios" />
 </navigation>
