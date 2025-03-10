@@ -4,5 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="fondo">#EEFAFF</color>
     <color name="boton">#A0DFF7</color>
+    <color name="light_medium_blue">#A0DFF7</color>
+
+
 
 </resources>
