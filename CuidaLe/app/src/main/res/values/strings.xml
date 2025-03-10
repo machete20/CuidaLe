@@ -50,17 +50,5 @@
     <string name="contact_2_name">Antonia Sanchez</string>
     <string name="contact_2_location">Vera, Almería</string>
 
-    <!-- STRINGS FRAGMENT AYUDA -->
-    <string name="InformarProblema">Informar de un problema</string>
-    <string name="ServicioAyuda">Servicio de ayuda</string>
-
-    <!-- STRINGS FRAGMENT SEGURIDAD -->
-    <string name="title_security">SEGURIDAD</string>
-    <string name="change_password">Cambiar contraseña</string>
-    <string name="two_step_auth">Autenticación en dos pasos</string>
-    <string name="login_alerts">Alertas de inicio de sesión</string>
-    <string name="saved_login">Inicio de sesión guardado</string>
-    <string name="where_logged_in">Donde has iniciado sesión</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
