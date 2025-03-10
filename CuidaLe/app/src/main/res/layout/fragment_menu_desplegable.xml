@@ -32,10 +32,10 @@
             android:textSize="34sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+            app:layout_constraintTop_toBottomOf="@+id/RecetasMenu" />
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/PastilleroMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
@@ -56,7 +56,7 @@
             android:textSize="34sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+            app:layout_constraintTop_toBottomOf="@+id/PastilleroMenu" />
 
         <TextView
             android:id="@+id/textView16"
@@ -71,7 +71,7 @@
             app:layout_constraintTop_toBottomOf="@+id/RecordatorioMenu" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/HistorialMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
@@ -92,10 +92,10 @@
             android:textSize="34sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+            app:layout_constraintTop_toBottomOf="@+id/HistorialMenu" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/RecetasMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"

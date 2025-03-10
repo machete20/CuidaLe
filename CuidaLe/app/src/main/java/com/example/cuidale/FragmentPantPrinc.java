@@ -50,7 +50,7 @@ public class FragmentPantPrinc extends Fragment {
 
         recetas.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            //navController.navigate(R.id.fragmentRecetas);
+            navController.navigate(R.id.fragmentRecetas);
         });
 
         farmacias = v.findViewById(R.id.CardFarmacias);
@@ -64,7 +64,7 @@ public class FragmentPantPrinc extends Fragment {
 
         pastillero.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            //navController.navigate(R.id.fragmentPastillero);
+            navController.navigate(R.id.fragmentPastillero);
         });
 
         recordatorios = v.findViewById(R.id.CardRecordatorios);
@@ -78,7 +78,7 @@ public class FragmentPantPrinc extends Fragment {
 
         historial.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            //navController.navigate(R.id.fragmentHistorial);
+            navController.navigate(R.id.fragmentHistorial);
         });
 
         calendario = v.findViewById(R.id.CardCalendario);

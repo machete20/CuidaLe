@@ -24,7 +24,7 @@
             android:layout_height="48dp">
 
             <ImageView
-                android:id="@+id/menuIcon"
+                android:id="@+id/menuPastillero"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/barras"
@@ -35,12 +35,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/profileIcon"
+                android:id="@+id/cuentaPastillero"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/usuario"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/menuIcon"
+                app:layout_constraintEnd_toEndOf="@+id/menuPastillero"
                 app:layout_constraintHorizontal_bias="0.044"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -216,7 +216,7 @@
 
     <!-- Bottom Navigation Buttons -->
     <ImageButton
-        android:id="@+id/backButton"
+        android:id="@+id/backButtonPastillero"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="@drawable/rounded_light_blue"
@@ -231,7 +231,7 @@
 
     <!-- Add Button -->
     <ImageButton
-        android:id="@+id/addButton"
+        android:id="@+id/addButtonPastillero"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="@drawable/rounded_light_blue"
