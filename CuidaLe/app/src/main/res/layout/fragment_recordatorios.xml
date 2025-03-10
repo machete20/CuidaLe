@@ -188,7 +188,7 @@
     </ScrollView>
 
     <ImageButton
-        android:id="@+id/btn_retroceso"
+        android:id="@+id/btn_retrocesoRecordatorios"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="bottom|start"
