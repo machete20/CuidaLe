@@ -20,7 +20,7 @@ public class FragmentSeguridad extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v= inflater.inflate(R.layout.fragment_seguridad, container, false);
-        atras = v.findViewById(R.id.btn_retroceso);
+        atras = v.findViewById(R.id.btn_retrocesoSeguridad);
 
         atras.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
