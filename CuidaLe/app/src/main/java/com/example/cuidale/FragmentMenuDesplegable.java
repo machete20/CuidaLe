@@ -31,10 +31,20 @@ public class FragmentMenuDesplegable extends Fragment {
 
     private TextView historial;
 
+    private TextView inicio;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_menu_desplegable,container,false);
+
+        inicio = v.findViewById(R.id.TextoMenuPrincp);
+
+        inicio.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentPantPrinc);
+        });
 
         ajustes = v.findViewById(R.id.BotonAjustes);
 

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
@@ -26,6 +27,9 @@ public class FragmentPantPrinc extends Fragment {
     private CardView recordatorios;
     private CardView historial;
     private CardView calendario;
+
+    private LinearLayout usuario;
+
     private View v;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +48,13 @@ public class FragmentPantPrinc extends Fragment {
         menu.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.action_fragmentPantPrinc_to_fragmentMenuDesplegable);
+        });
+
+        usuario = v.findViewById(R.id.UsuarioInicio);
+
+        usuario.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentUsuario);
         });
 
         recetas = v.findViewById(R.id.CardRecetas);
