@@ -33,6 +33,7 @@
     <string name="Seguridad">Seguridad</string>
     <string name="CerrarSesion">CERRAR SESION</string>
     <string name="title_Historial">Historial</string>
+    <string name="MenuPrincipal">Menú Principal</string>
 
 
     <!-- STRINGS FRAGMENT USUARIO CUIDADOR -->
@@ -63,6 +64,7 @@
     <!-- RECORDATORIOS -->
     <string name="recordatorio1_hora">06:00</string>
     <string name="recordatorio1_med">Ibuprofeno</string>
+
     <!-- STRINGS FRAGMENT AYUDA -->
     <string name="InformarProblema">Informar de un problema</string>
     <string name="ServicioAyuda">Servicio de ayuda</string>
@@ -70,10 +72,9 @@
     <!-- STRINGS FRAGMENT SEGURIDAD -->
 
     <string name="CambiarContrasena">Cambiar contraseña</string>
-    <string name="AuntenticacionDosPasos">Autenticación en dos pasos</string>
-    <string name="AlertasLogin">Alertas de inicio de sesión</string>
-    <string name="LoginGuardado">Inicio de sesión guardado</string>
-    <string name="DondeLogin">Donde has iniciado sesión</string>
+    <string name="AuntenticacionDosPasos">Autenticación</string>
+    <string name="AlertasLogin">Alertas inicio sesión</string>
+    <string name="Dispositivos">Dispositivos</string>
 
     <string name="title_security">SEGURIDAD</string>
     <string name="change_password">Cambiar contraseña</string>
