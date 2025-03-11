@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -19,6 +20,8 @@ public class FragmentUsuario extends Fragment {
     private ImageButton atras;
 
     private ImageView menu;
+
+    private Button cerrarSesion;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +40,13 @@ public class FragmentUsuario extends Fragment {
         menu.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentMenuDesplegable);
+        });
+
+        cerrarSesion = v.findViewById(R.id.btnLogout);
+
+        cerrarSesion.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentInicioSes);
         });
 
         return v;
