@@ -120,7 +120,7 @@
         android:id="@+id/Texto1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="16dp"
         android:text="@string/DatosPersonales"
         android:textSize="26sp"
@@ -131,7 +131,7 @@
         android:id="@+id/Texto2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="16dp"
         android:text="@string/Seguridad"
         android:textSize="26sp"
@@ -142,12 +142,35 @@
         android:id="@+id/Texto3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="16dp"
         android:text="@string/Notificaciones"
         android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linea3" />
+
+
+    <TextView
+        android:id="@+id/Texto4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/TemaOscuro"
+        android:textSize="26sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linea4" />
+
+    <TextView
+        android:id="@+id/Texto5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/Ayuda"
+        android:textSize="26sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linea7" />
 
     <Switch
         android:id="@+id/switch1"
@@ -158,8 +181,8 @@
         app:layout_constraintBottom_toTopOf="@+id/linea4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Texto3"
-        app:layout_constraintTop_toBottomOf="@+id/linea3" />
-
+        app:layout_constraintTop_toBottomOf="@+id/linea3"
+        tools:ignore="MissingConstraints,TouchTargetSizeCheck,UseSwitchCompatOrMaterialXml" />
 
     <Switch
         android:id="@+id/switch2"
@@ -173,26 +196,59 @@
         app:layout_constraintTop_toBottomOf="@+id/linea4"
         tools:ignore="MissingConstraints,TouchTargetSizeCheck,UseSwitchCompatOrMaterialXml" />
 
-    <TextView
-        android:id="@+id/Texto4"
+    <ImageView
+        android:id="@+id/icono1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/TemaOscuro"
-        android:textSize="26sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linea4" />
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="icon"
+        android:scaleX="1.12"
+        android:scaleY="1.12"
+        android:src="@drawable/help"
+        app:layout_constraintEnd_toStartOf="@+id/Texto1"
+        app:layout_constraintTop_toBottomOf="@+id/linea"
+        app:srcCompat="@drawable/idcard" />
 
-    <TextView
-        android:id="@+id/Texto5"
+    <ImageView
+        android:id="@+id/icono2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/Ayuda"
-        android:textSize="26sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="icon"
+        android:scaleX="1.12"
+        android:scaleY="1.12"
+        android:src="@drawable/help"
+        app:layout_constraintEnd_toStartOf="@+id/Texto2"
+        app:layout_constraintTop_toBottomOf="@+id/linea2"
+        app:srcCompat="@drawable/candado" />
+
+    <ImageView
+        android:id="@+id/icono3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="icon"
+        android:scaleX="1.12"
+        android:scaleY="1.12"
+        android:src="@drawable/help"
+        app:layout_constraintEnd_toStartOf="@+id/Texto3"
+        app:layout_constraintTop_toBottomOf="@+id/linea3"
+        app:srcCompat="@drawable/notification" />
+
+    <ImageView
+        android:id="@+id/icono5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="icon"
+        android:scaleX="1.12"
+        android:scaleY="1.12"
+        android:src="@drawable/help"
+        app:layout_constraintEnd_toStartOf="@+id/Texto5"
         app:layout_constraintTop_toBottomOf="@+id/linea7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
