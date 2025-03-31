@@ -45,6 +45,8 @@ public class FragmentUsuario extends Fragment {
         cerrarSesion = v.findViewById(R.id.btnLogout);
 
         cerrarSesion.setOnClickListener(v->{
+            AuthManager manager = new AuthManager(requireContext()); // Pasar el contexto
+            manager.cerrarSesion();
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentInicioSes);
         });

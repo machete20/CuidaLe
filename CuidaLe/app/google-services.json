@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "287840436443",
+    "project_id": "cuidale",
+    "storage_bucket": "cuidale.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287840436443:android:68446701a67be027d3ccfe",
+        "android_client_info": {
+          "package_name": "com.example.cuidale"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyHSOBfM7m63KljQWDpTZkyhBSSPTd9AY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
