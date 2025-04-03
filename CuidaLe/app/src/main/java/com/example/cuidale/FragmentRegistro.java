@@ -1,6 +1,7 @@
 package com.example.cuidale;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import es.dmoral.toasty.Toasty;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+
+import es.dmoral.toasty.Toasty;
 
 public class FragmentRegistro extends Fragment {
 
@@ -25,15 +27,15 @@ public class FragmentRegistro extends Fragment {
     private EditText password;
     private EditText confirmPassword;
     private EditText dni;
-    private AuthManager manager;
     private FirebaseAuth mAuth;
+    private FirebaseDataManager dataManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_registro, container, false);
-        manager = new AuthManager(requireContext()); // Pasar el contexto
-        mAuth = FirebaseAuth.getInstance(); // Instanciar FirebaseAuth
+        dataManager = FirebaseDataManager.getInstance(); // Inicializa FirebaseDataManager
+        mAuth = FirebaseAuth.getInstance();  // Inicializa FirebaseAuth aquí
 
         registro = v.findViewById(R.id.bRegistroR);
         correo = v.findViewById(R.id.correoR);
@@ -47,6 +49,7 @@ public class FragmentRegistro extends Fragment {
             String passwordText = password.getText().toString();
             String confirmPasswordText = confirmPassword.getText().toString();
             String dniText = dni.getText().toString().trim();
+            String userText = user.getText().toString();
 
             // Validación de entrada
             if (correoText.isEmpty() || !isValidEmail(correoText)) {
@@ -72,28 +75,51 @@ public class FragmentRegistro extends Fragment {
             // Deshabilitar el botón durante el proceso de registro
             registro.setEnabled(false);
 
-            // Intentar registrar usuario
-            mAuth.createUserWithEmailAndPassword(correoText, passwordText)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            // El registro fue exitoso
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toasty.success(requireContext(), "Registro completado. Ahora inicia sesión.", Toast.LENGTH_SHORT, true).show();
-                            NavController navController = Navigation.findNavController(v);
-                            navController.navigate(R.id.fragmentInicioSes); // Navegar a la pantalla de inicio de sesión
-                        } else {
-                            // Si el correo ya está registrado, manejar el error
-                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                // El correo ya está registrado
-                                Toasty.error(requireContext(), "Este correo ya está registrado.", Toast.LENGTH_SHORT, true).show();
-                            } else {
-                                // Cualquier otro error
-                                Toasty.error(requireContext(), "Error al crear la cuenta: " + task.getException().getMessage(), Toast.LENGTH_SHORT, true).show();
-                            }
-                            // Rehabilitar el botón en caso de error
-                            registro.setEnabled(true);
-                        }
-                    });
+            // Verificar si el DNI ya está registrado en la base de datos
+            dataManager.verificarYRegistrarUsuario(dniText, userText, correoText, new FirebaseDataManager.OnDniCheckListener() {
+                @Override
+                public void onDniExist() {
+                    // Mostrar mensaje en caso de que el DNI ya exista
+                    Toasty.error(requireContext(), "Este DNI ya está registrado.", Toast.LENGTH_SHORT, true).show();
+                    registro.setEnabled(true);
+                }
+
+                @Override
+                public void onDniDoesNotExist() {
+                    // Continuar con el proceso de registro si el DNI no existe
+                    mAuth.createUserWithEmailAndPassword(correoText, passwordText)
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    if (user != null) {
+                                        Log.i("Registro", "✅ Usuario registrado en Firebase");
+
+                                        // Solo registrar el usuario en la base de datos si Firebase Authentication fue exitoso
+                                        FirebaseDataManager.Usuario usuario = new FirebaseDataManager.Usuario(userText, correoText);
+                                        dataManager.insertarUsuario(dniText, usuario, new FirebaseDataManager.OnUserInsertedListener() {
+                                            @Override
+                                            public void onSuccess() {
+                                                // Usuario insertado correctamente en la base de datos
+                                                Toasty.success(requireContext(), "Registro completado. Ahora inicia sesión.", Toast.LENGTH_SHORT, true).show();
+                                                NavController navController = Navigation.findNavController(v);
+                                                navController.navigate(R.id.fragmentInicioSes); // Navegar a la pantalla de inicio de sesión
+                                            }
+
+                                            @Override
+                                            public void onFailure(String errorMessage) {
+                                                // Si falla la inserción en la base de datos
+                                                Toasty.error(requireContext(), "Error al guardar los datos del usuario: " + errorMessage, Toast.LENGTH_SHORT, true).show();
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    Toasty.error(requireContext(), "Error el DNI puede estar ya registrado", Toast.LENGTH_SHORT, true).show();
+                                }
+                                // Rehabilitar el botón en ambos casos (exitoso o fallido)
+                                registro.setEnabled(true);
+                            });
+                }
+            });
         });
 
         return v;
@@ -106,34 +132,14 @@ public class FragmentRegistro extends Fragment {
 
     // Método para validar el formato del DNI
     private boolean isValidDNI(String dni) {
-        // Verificar que el DNI tenga 9 caracteres
-        if (dni.length() != 9) {
-            return false;
-        }
-
-        // Verificar que los primeros 8 caracteres sean números
+        if (dni.length() != 9) return false;
         String numeros = dni.substring(0, 8);
-        if (!numeros.matches("[0-9]+")) {
-            return false;
-        }
-
-        // Verificar que el último carácter sea una letra
+        if (!numeros.matches("[0-9]+")) return false;
         char letra = dni.charAt(8);
-        if (!Character.isLetter(letra)) {
-            return false;
-        }
-
-        // Lista de letras que corresponden a los números del 0 al 22 (cálculo del DNI español)
+        if (!Character.isLetter(letra)) return false;
         char[] letras = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
-
-        // Convertir los primeros 8 caracteres a un número entero
         int numero = Integer.parseInt(numeros);
-
-        // Calcular la letra correspondiente
         char letraCalculada = letras[numero % 23];
-
-        // Verificar si la letra calculada es la misma que la letra final del DNI
         return Character.toUpperCase(letra) == letraCalculada;
     }
-
 }
