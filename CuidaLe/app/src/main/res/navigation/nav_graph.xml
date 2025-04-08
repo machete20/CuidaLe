@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_fragmentPantPrinc_to_fragmentMenuDesplegable"
             app:destination="@id/fragmentMenuDesplegable" />
+        <action
+            android:id="@+id/action_fragmentPantPrinc_to_fragmentFarmarcias"
+            app:destination="@id/fragmentFarmarcias" />
     </fragment>
     <fragment
         android:id="@+id/fragmentMenuDesplegable"
@@ -93,4 +96,13 @@
         android:name="com.example.cuidale.FragmentHistorial"
         android:label="fragment_historial"
         tools:layout="@layout/fragment_historial" />
+    <fragment
+        android:id="@+id/fragmentFarmarcias"
+        android:name="com.example.cuidale.FragmentFarmarcias"
+        android:label="fragment_farmarcias"
+        tools:layout="@layout/fragment_farmarcias" >
+        <action
+            android:id="@+id/action_fragmentFarmarcias_to_fragmentPantPrinc"
+            app:destination="@id/fragmentPantPrinc" />
+    </fragment>
 </navigation>

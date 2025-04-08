@@ -68,7 +68,7 @@ public class FragmentPantPrinc extends Fragment {
 
         farmacias.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            //navController.navigate(R.id.fragmentFarmacias);
+            navController.navigate(R.id.fragmentFarmarcias);
         });
 
         pastillero = v.findViewById(R.id.CardPastillero);
