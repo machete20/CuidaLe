@@ -96,7 +96,7 @@ public class FragmentPantPrinc extends Fragment {
 
         calendario.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            //navController.navigate(R.id.fragmentCalendario);
+            navController.navigate(R.id.fragmentCalendario);
         });
 
         return v;

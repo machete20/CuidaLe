@@ -105,4 +105,9 @@
             android:id="@+id/action_fragmentFarmarcias_to_fragmentPantPrinc"
             app:destination="@id/fragmentPantPrinc" />
     </fragment>
+    <fragment
+        android:id="@+id/fragmentCalendario"
+        android:name="com.example.cuidale.FragmentCalendario"
+        android:label="fragment_calendario"
+        tools:layout="@layout/fragment_calendario" />
 </navigation>
