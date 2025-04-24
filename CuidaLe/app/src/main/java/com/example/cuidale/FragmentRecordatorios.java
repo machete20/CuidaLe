@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -28,6 +29,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
@@ -43,12 +46,29 @@ public class FragmentRecordatorios extends Fragment {
     private View v;
     private List<Recordatorio> listaRecordatorios = new ArrayList<>();
 
+    private ImageButton atras;
+
+    private ImageView menu;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_recordatorios, container, false);
 
+        menu = v.findViewById(R.id.menuDesplegableRecordatorios);
+
+        menu.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentMenuDesplegable);
+        });
+
         ImageButton addButton = v.findViewById(R.id.addButtonRecordatorios);
+        atras = v.findViewById(R.id.btn_retrocesoRecordatorios);
         addButton.setOnClickListener(view -> mostrarDialogoNuevoRecordatorio());
+
+        atras.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentPantPrinc);
+        });
 
         cargarRecordatoriosDesdePreferences();
 
@@ -78,6 +98,10 @@ public class FragmentRecordatorios extends Fragment {
     private void mostrarDialogoNuevoRecordatorio() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View dialogView = inflater.inflate(R.layout.dialog_recordatorio_input, null);
+
+        LinearLayout layoutDialogo = dialogView.findViewById(R.id.layoutDialogo);
+        layoutDialogo.setVisibility(View.GONE);  // Ocultar inicialmente
+
         EditText inputNombre = dialogView.findViewById(R.id.inputNombre);
 
         MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
@@ -86,32 +110,41 @@ public class FragmentRecordatorios extends Fragment {
                 .setMinute(0)
                 .build();
 
+        timePicker.addOnPositiveButtonClickListener(view -> {
+            // Mostrar el layout del diálogo
+            layoutDialogo.setVisibility(View.VISIBLE);
+
+            // Mostrar el diálogo con los campos de entrada
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Nuevo Recordatorio")
+                    .setView(dialogView)
+                    .setPositiveButton("Añadir", (dialog, which) -> {
+                        String nombre = inputNombre.getText().toString().trim();
+                        String horaFormateada = String.format("%02d:%02d", timePicker.getHour(), timePicker.getMinute());
+
+                        if (nombre.isEmpty()) {
+                            Toast.makeText(getContext(), "Por favor completa el nombre", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        Recordatorio nuevoRecordatorio = new Recordatorio(nombre, horaFormateada);
+                        listaRecordatorios.add(nuevoRecordatorio);
+                        guardarRecordatorioEnPreferences(nuevoRecordatorio);
+                        Collections.sort(listaRecordatorios, (r1, r2) -> r1.getHora().compareTo(r2.getHora()));
+                        actualizarListaRecordatorios(inflater);
+                    })
+                    .setNegativeButton("Cancelar", null)
+                    .show();
+        });
+
+        timePicker.addOnNegativeButtonClickListener(view ->
+                Toast.makeText(getContext(), "Selección de hora cancelada", Toast.LENGTH_SHORT).show()
+        );
+
+        // Mostrar TimePicker al principio
         timePicker.show(getParentFragmentManager(), "time_picker");
-
-        timePicker.addOnPositiveButtonClickListener(view -> inputNombre.setEnabled(true));
-        timePicker.addOnNegativeButtonClickListener(view -> Toast.makeText(getContext(), "Selección de hora cancelada", Toast.LENGTH_SHORT).show());
-
-        new AlertDialog.Builder(getContext())
-                .setTitle("Nuevo Recordatorio")
-                .setView(dialogView)
-                .setPositiveButton("Añadir", (dialog, which) -> {
-                    String nombre = inputNombre.getText().toString().trim();
-                    String horaFormateada = String.format("%02d:%02d", timePicker.getHour(), timePicker.getMinute());
-
-                    if (nombre.isEmpty() || horaFormateada.isEmpty()) {
-                        Toast.makeText(getContext(), "Por favor completa ambos campos", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    Recordatorio nuevoRecordatorio = new Recordatorio(nombre, horaFormateada);
-                    listaRecordatorios.add(nuevoRecordatorio);
-                    guardarRecordatorioEnPreferences(nuevoRecordatorio);
-                    Collections.sort(listaRecordatorios, (r1, r2) -> r1.getHora().compareTo(r2.getHora()));
-                    actualizarListaRecordatorios(inflater);
-                })
-                .setNegativeButton("Cancelar", null)
-                .show();
     }
+
 
     private void guardarRecordatorioEnPreferences(Recordatorio recordatorio) {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("recordatorios_pref", getContext().MODE_PRIVATE);
@@ -267,18 +300,6 @@ public class FragmentRecordatorios extends Fragment {
                 AlarmManager.INTERVAL_DAY,                  // Repetir cada día
                 pendingIntent
         );
-
-        // Crear la notificación
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "canal_recordatorios")
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Recordatorio de: " + recordatorio.getNombre())
-                .setContentText("No te olvides de: " + recordatorio.getNombre())
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true)
-                .setWhen(calendar.getTimeInMillis());  // Establece la hora cuando se va a mostrar la notificación
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-        notificationManager.notify(recordatorio.getNombre().hashCode(), builder.build());
 
         // Mostrar un mensaje de confirmación
         Toast.makeText(getContext(), "Alarma programada para " + recordatorio.getHora(), Toast.LENGTH_SHORT).show();
