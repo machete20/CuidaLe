@@ -1,5 +1,6 @@
 package com.example.cuidale;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,17 +11,21 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AlertDialog;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 public class FragmentCalendario extends Fragment {
 
@@ -29,8 +34,9 @@ public class FragmentCalendario extends Fragment {
     private long selectedDate;
 
     private ImageButton atras;
-    private androidx.activity.result.ActivityResultLauncher<String[]> requestPermissionLauncher;
 
+    private ImageView menu;
+    private androidx.activity.result.ActivityResultLauncher<String[]> requestPermissionLauncher;
 
     public FragmentCalendario() {
         // Constructor vacío
@@ -41,13 +47,45 @@ public class FragmentCalendario extends Fragment {
                              Bundle savedInstanceState) {
         // Infla el layout del fragmento
         View rootView = inflater.inflate(R.layout.fragment_calendario, container, false);
-        checkAndRequestCalendarPermissions();
+
+        menu = rootView.findViewById(R.id.menuDesplegableCalendario);
+
+        menu.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentMenuDesplegable);
+        });
+
+        // Inicializamos el ActivityResultLauncher aquí
+        requestPermissionLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestMultiplePermissions(),
+                new ActivityResultCallback<Map<String, Boolean>>() {
+                    @Override
+                    public void onActivityResult(Map<String, Boolean> result) {
+                        // Verificamos si los permisos fueron concedidos
+                        boolean allGranted = true;
+                        for (Boolean isGranted : result.values()) {
+                            if (!isGranted) {
+                                allGranted = false;
+                                break;
+                            }
+                        }
+
+                        if (allGranted) {
+
+                        } else {
+                            Toast.makeText(getContext(), "Permisos denegados", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+
+        checkAndRequestCalendarPermissions(); // Verificamos y solicitamos permisos
 
         atras = rootView.findViewById(R.id.btn_retrocesoCalendario);
 
-        atras.setOnClickListener(v->{
+        atras.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
-            navController.popBackStack();
+            navController.navigate(R.id.fragmentPantPrinc);
         });
 
         // Referencias a las vistas
@@ -169,7 +207,6 @@ public class FragmentCalendario extends Fragment {
                     Toast.makeText(getActivity(), "Evento eliminado", Toast.LENGTH_SHORT).show();
                 });
 
-
                 // Agregar el TextView y el botón de eliminar al layout horizontal
                 eventLayout.addView(eventTextView);
                 eventLayout.addView(deleteButton);
@@ -236,7 +273,6 @@ public class FragmentCalendario extends Fragment {
                 intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endCal.getTimeInMillis());
                 intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
 
-
                 intent.setPackage("com.google.android.calendar"); // Fuerza abrir Google Calendar
 
                 try {
@@ -250,10 +286,10 @@ public class FragmentCalendario extends Fragment {
             }
         });
 
-
         builder.setNegativeButton("Cancelar", null);
         builder.create().show();
     }
+
     private void deleteEventFromGoogleCalendar(String eventDetails, long dateMillis) {
         String titleToDelete = "";
         if (eventDetails.startsWith("Evento: ")) {
@@ -292,24 +328,24 @@ public class FragmentCalendario extends Fragment {
             );
 
             if (rowsDeleted > 0) {
-                //Toast.makeText(getActivity(), "También eliminado de Google Calendar", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Evento eliminado de Google Calendar", Toast.LENGTH_SHORT).show();
+            } else {
+                //Toast.makeText(getActivity(), "Evento no encontrado en Google Calendar", Toast.LENGTH_SHORT).show();
             }
-        } catch (SecurityException e) {
-            //Toast.makeText(getActivity(), "No se pudo eliminar de Google Calendar (verifica permisos)", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            //Toast.makeText(getActivity(), "Error al eliminar evento de Google Calendar", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void checkAndRequestCalendarPermissions() {
-        if (androidx.core.content.ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_CALENDAR) != android.content.pm.PackageManager.PERMISSION_GRANTED ||
-                androidx.core.content.ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.WRITE_CALENDAR) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+        // Verificar si tenemos los permisos de calendario
+        String[] permissions = {
+                android.Manifest.permission.READ_CALENDAR,
+                android.Manifest.permission.WRITE_CALENDAR
+        };
 
-            requestPermissionLauncher.launch(new String[]{
-                    android.Manifest.permission.READ_CALENDAR,
-                    android.Manifest.permission.WRITE_CALENDAR
-            });
-        }
+        requestPermissionLauncher.launch(permissions);
     }
-
 
     @Override
     public void onStart() {

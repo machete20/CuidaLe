@@ -35,7 +35,10 @@ public class AlarmReceiver extends BroadcastReceiver {
             return;
         }
 
+        // Generar un ID único para la notificación
+        int notificationId = (mensaje.hashCode() * 31) + (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
+
         // Mostrar la notificación
-        notificationManager.notify(mensaje.hashCode(), builder.build());
+        notificationManager.notify(notificationId, builder.build());
     }
 }

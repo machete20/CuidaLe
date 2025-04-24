@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void crearCanalDeNotificacion() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             CharSequence nombre = "RecordatorioCanal";

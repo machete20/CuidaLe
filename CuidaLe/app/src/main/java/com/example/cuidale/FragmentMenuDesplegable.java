@@ -33,6 +33,8 @@ public class FragmentMenuDesplegable extends Fragment {
 
     private TextView inicio;
 
+    private TextView calendario;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +95,13 @@ public class FragmentMenuDesplegable extends Fragment {
         historial.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentHistorial);
+        });
+
+        calendario = v.findViewById(R.id.calendarioMenu);
+
+        calendario.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentCalendario);
         });
 
 

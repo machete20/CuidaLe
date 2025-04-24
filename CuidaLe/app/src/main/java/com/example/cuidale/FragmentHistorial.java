@@ -31,7 +31,7 @@ public class FragmentHistorial extends Fragment {
 
         atras.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
-            navController.popBackStack();
+            navController.navigate(R.id.fragmentPantPrinc);
         });
 
         menu = v.findViewById(R.id.IMGmenuPrincpHistorial);
