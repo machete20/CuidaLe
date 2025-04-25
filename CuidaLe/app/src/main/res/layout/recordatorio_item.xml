@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,11 +16,12 @@
         android:layout_margin="8dp">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginEnd="12dp"
             android:contentDescription="Campana"
-            android:src="@drawable/recordatorio" />
+            android:src="@drawable/recordatorio"
+            app:srcCompat="@drawable/bell_on" />
 
         <TextView
             android:id="@+id/textoHora"
@@ -37,9 +39,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Ibuprofeno"
+            android:textAlignment="textStart"
             android:textColor="#000000"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            android:textSize="20dp" />
 
         <Switch
             android:id="@+id/switchRecordatorio"
@@ -51,9 +53,11 @@
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/securitycheck"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="4dp"
+            android:backgroundTint="@color/boton"
             android:contentDescription="Eliminar recordatorio"
-            android:layout_alignParentEnd="true"/>
+            android:src="@drawable/basura" />
     </LinearLayout>
 
 

@@ -8,46 +8,64 @@
     tools:context=".FragmentCalendario">
 
     <!-- Título del calendario -->
+
     <androidx.cardview.widget.CardView
-        android:id="@+id/BarraArribaRecordatorios"
-        android:layout_width="wrap_content"
+        android:id="@+id/topBarCard"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        app:cardCornerRadius="20dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/light_medium_blue"
+        app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="340dp"
-            android:layout_height="wrap_content"
-            android:background="@color/boton">
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
 
             <ImageView
-                android:id="@+id/menuDesplegableCalendario"
-                android:layout_width="40sp"
-                android:layout_height="40sp"
-                android:layout_margin="4dp"
+                android:id="@+id/menuPastillero"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/barras"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.957"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/IMGcuentaPrincpRecordatorios"
-                android:layout_width="40sp"
-                android:layout_height="40sp"
-                android:layout_margin="4dp"
+                android:id="@+id/cuentaPastillero"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/usuario"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/menuPastillero"
+                app:layout_constraintHorizontal_bias="0.044"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
 
+    <TextView
+        android:id="@+id/calendarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/Calendario"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBarCard" />
+
+    <!-- CalendarView para seleccionar la fecha -->
     <ImageButton
         android:id="@+id/btn_retrocesoCalendario"
         android:layout_width="50dp"
@@ -61,18 +79,6 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <TextView
-        android:id="@+id/calendarTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Calendario"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BarraArribaRecordatorios" />
-
-    <!-- CalendarView para seleccionar la fecha -->
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="0dp"
