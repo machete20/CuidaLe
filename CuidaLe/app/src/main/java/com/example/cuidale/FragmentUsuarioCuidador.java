@@ -27,6 +27,7 @@ public class FragmentUsuarioCuidador extends Fragment {
 
         v= inflater.inflate(R.layout.fragment_usuariocuidador, container, false);
 
+        
         menu = v.findViewById(R.id.menuDesplegableUsuario);
 
         menu.setOnClickListener(v->{
