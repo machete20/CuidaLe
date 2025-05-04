@@ -1,8 +1,5 @@
 <resources>
 
-    <!-- MAPS API KEY. NO TOCAR! -->
-    <string name="MY_APIKEY">AIzaSyDHFG7ZiyKBVzFH83Az0x26yIA_JQeU61k</string>
-
     <string name="app_name">CuidaLe</string>
     <string name="botonInicioSesion">Iniciar sesion</string>
     <string name="botonRegistro">Registrarme</string>
@@ -71,6 +68,9 @@
 
     <!-- FARMACIAS -->
     <string name="title_farmacies">FARMACIAS</string>
+    <string name="farmacias_cercanas">¡Encuentra tus farmacias cercanas!</string>
+
+    <string name="open_google_maps">Abrir Google Maps</string>
 
     <!-- STRINGS FRAGMENT AYUDA -->
     <string name="InformarProblema">Informar de un problema</string>

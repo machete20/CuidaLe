@@ -59,7 +59,7 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="24dp"
         android:text="@string/title_farmacies"
         android:textColor="@android:color/black"
@@ -67,15 +67,27 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/recipeListCard"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/farmacias_cercanas"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/recipeListCard"
         android:layout_width="match_parent"
         android:layout_height="404dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
@@ -88,16 +100,21 @@
             android:layout_height="match_parent"
             android:padding="16dp" >
 
-            <fragment
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:id="@+id/map"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+            <ImageButton
+                android:id="@+id/previewGoogleMaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/previewgooglemaps"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/open_google_maps"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <ImageButton
-        android:id="@+id/backButtonRecetas"
+        android:id="@+id/btn_retrocesoFarmacias"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="@drawable/rounded_light_blue"
@@ -111,25 +128,12 @@
         app:layout_constraintVertical_bias="0.976" />
 
     <!-- Add Button -->
-    <ImageButton
-        android:id="@+id/addButtonRecetas"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/rounded_light_blue"
-        android:contentDescription="Añadir"
-        android:src="@drawable/anadir"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.932"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
 
     <ImageView
         android:id="@+id/imageView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/cruz_farmacia"
         app:layout_constraintBottom_toTopOf="@+id/titleTextView"
         app:layout_constraintEnd_toEndOf="parent"
