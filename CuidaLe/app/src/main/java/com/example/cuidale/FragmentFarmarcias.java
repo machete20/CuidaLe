@@ -4,17 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -40,7 +36,7 @@ public class FragmentFarmarcias extends Fragment {
         // Infla el layout del fragmento
         View rootView = inflater.inflate(R.layout.fragment_farmarcias, container, false);
 
-        atras = rootView.findViewById(R.id.btn_retrocesoFarmacias);
+        atras = rootView.findViewById(R.id.btn_retrocesoRecetas);
 
         atras.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
