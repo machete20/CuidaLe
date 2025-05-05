@@ -25,7 +25,7 @@ public class FragmentRecetas extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_recetas, container, false);
 
-        atras = v.findViewById(R.id.backButtonRecetas);
+        atras = v.findViewById(R.id.btn_retrocesoRecetas);
 
         atras.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);

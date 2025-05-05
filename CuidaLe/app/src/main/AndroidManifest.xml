@@ -35,9 +35,6 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/MY_APIKEY" />
 
         <receiver android:name=".AlarmReceiver" android:enabled="true" android:exported="false" />
 
