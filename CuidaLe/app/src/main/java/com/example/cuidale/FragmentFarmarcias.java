@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,8 +23,8 @@ public class FragmentFarmarcias extends Fragment {
     private ImageButton atras;
 
     private ImageButton aGoogleMaps;
-
-
+    private ImageView menu;
+    private ImageView cuenta;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,16 +35,16 @@ public class FragmentFarmarcias extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Infla el layout del fragmento
-        View rootView = inflater.inflate(R.layout.fragment_farmarcias, container, false);
+        v = inflater.inflate(R.layout.fragment_farmarcias, container, false);
 
-        atras = rootView.findViewById(R.id.btn_retrocesoRecetas);
+        atras = v.findViewById(R.id.btn_retrocesoFarmacias);
 
         atras.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentPantPrinc);
         });
 
-        aGoogleMaps = rootView.findViewById(R.id.previewGoogleMaps);
+        aGoogleMaps = v.findViewById(R.id.previewGoogleMaps);
 
         aGoogleMaps.setOnClickListener(v -> {
             Uri gmmIntentUri = Uri.parse("geo:37.76922,-3.79028?q=farmacias");
@@ -53,8 +54,20 @@ public class FragmentFarmarcias extends Fragment {
             startActivity(mapIntent);
         });
 
-        return rootView;
+        menu = v.findViewById(R.id.menuFarmacias);
+
+        menu.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentMenuDesplegable);
+        });
+
+        cuenta = v.findViewById(R.id.PerfilFarmacias);
+
+        cuenta.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentUsuarioCuidador);
+        });
+
+        return v;
     }
-
-
 }

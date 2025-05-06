@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -264,46 +266,39 @@ public class FragmentRecordatorios extends Fragment {
         int hora = Integer.parseInt(partes[0]);
         int minuto = Integer.parseInt(partes[1]);
 
-        // Crear una instancia del calendario
-        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hora);
+        calendar.set(Calendar.MINUTE, minuto);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
-        // Establecer la hora y los minutos a la hora configurada por el usuario
-        calendar.set(java.util.Calendar.HOUR_OF_DAY, hora);
-        calendar.set(java.util.Calendar.MINUTE, minuto);
-        calendar.set(java.util.Calendar.SECOND, 0);
-        calendar.set(java.util.Calendar.MILLISECOND, 0);  // Asegurarse de que los milisegundos también estén a cero
-
-        // Si la hora ya pasó para hoy, establecer la alarma para mañana
-        if (calendar.before(java.util.Calendar.getInstance())) {
-            calendar.add(java.util.Calendar.DAY_OF_MONTH, 1);
+        // Si la hora ya pasó, programar para mañana
+        if (calendar.before(Calendar.getInstance())) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        // Crear la Intent para la alarma
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
         intent.putExtra("mensaje", recordatorio.getNombre());
+        intent.putExtra("hora", recordatorio.getHora()); // para reprogramar luego
 
-        // Crear el PendingIntent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 getContext(),
-                recordatorio.getNombre().hashCode(),  // ID único para cada recordatorio
+                recordatorio.getNombre().hashCode(),
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        // Obtener el servicio de AlarmManager
-        android.app.AlarmManager alarmManager = (android.app.AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
 
-        // Programar la alarma con la hora exacta que se ha calculado
-        alarmManager.setRepeating(
+        alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
-                calendar.getTimeInMillis(),                  // Hora de inicio
-                AlarmManager.INTERVAL_DAY,                  // Repetir cada día
+                calendar.getTimeInMillis(),
                 pendingIntent
         );
 
-        // Mostrar un mensaje de confirmación
         Toast.makeText(getContext(), "Alarma programada para " + recordatorio.getHora(), Toast.LENGTH_SHORT).show();
     }
+
 
     private void cancelarAlarma(Recordatorio recordatorio) {
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
