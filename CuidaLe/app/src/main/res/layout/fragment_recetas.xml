@@ -98,7 +98,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.976" />
 
+    <!-- Delete Button -->
+    <!-- Delete Button (Papelera) -->
+
     <!-- Add Button -->
+    <ImageButton
+        android:id="@+id/btnEliminarReceta"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="72dp"
+        android:background="@drawable/rounded_light_blue"
+        android:contentDescription="Eliminar"
+        android:elevation="10dp"
+        android:src="@drawable/ic_papelera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_retrocesoRecetas"
+        app:layout_constraintTop_toBottomOf="@+id/recipeListCard"
+        app:layout_constraintVertical_bias="1.0" />
+
     <ImageButton
         android:id="@+id/addButtonRecetas"
         android:layout_width="48dp"

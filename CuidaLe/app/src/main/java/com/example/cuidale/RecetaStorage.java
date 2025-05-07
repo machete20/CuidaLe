@@ -18,8 +18,7 @@ public class RecetaStorage {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        Gson gson = new Gson();
-        String json = gson.toJson(recetas);
+        String json = new Gson().toJson(recetas);
         editor.putString(KEY_RECETAS, json);
         editor.apply();
     }
@@ -30,8 +29,7 @@ public class RecetaStorage {
 
         if (json == null) return new ArrayList<>();
 
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<Receta>>(){}.getType();
-        return gson.fromJson(json, type);
+        Type type = new TypeToken<ArrayList<Receta>>() {}.getType();
+        return new Gson().fromJson(json, type);
     }
 }

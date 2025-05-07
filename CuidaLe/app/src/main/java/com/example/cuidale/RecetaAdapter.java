@@ -1,5 +1,6 @@
 package com.example.cuidale;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,8 @@ import java.util.List;
 
 public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.RecetaViewHolder> {
 
-    private List<Receta> recetaList;
+    private final List<Receta> recetaList;
+    private int selectedPosition = RecyclerView.NO_POSITION;
 
     public RecetaAdapter(List<Receta> recetaList) {
         this.recetaList = recetaList;
@@ -31,11 +33,37 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.RecetaView
         Receta receta = recetaList.get(position);
         holder.tvNombre.setText(receta.getNombre());
         holder.tvFecha.setText(receta.getFecha());
+
+        // Mostrar selección visual
+        holder.itemView.setBackgroundColor(
+                position == selectedPosition ? Color.parseColor("#D3E3FC") : Color.TRANSPARENT
+        );
+
+        holder.itemView.setOnClickListener(v -> {
+            notifyItemChanged(selectedPosition);
+            selectedPosition = holder.getAdapterPosition();
+            notifyItemChanged(selectedPosition);
+        });
     }
 
     @Override
     public int getItemCount() {
         return recetaList.size();
+    }
+
+    public Receta getSelectedReceta() {
+        if (selectedPosition != RecyclerView.NO_POSITION && selectedPosition < recetaList.size()) {
+            return recetaList.get(selectedPosition);
+        }
+        return null;
+    }
+
+    public void eliminarSeleccionada() {
+        if (selectedPosition != RecyclerView.NO_POSITION && selectedPosition < recetaList.size()) {
+            recetaList.remove(selectedPosition);
+            notifyItemRemoved(selectedPosition);
+            selectedPosition = RecyclerView.NO_POSITION;
+        }
     }
 
     public static class RecetaViewHolder extends RecyclerView.ViewHolder {
