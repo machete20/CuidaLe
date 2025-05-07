@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo"
+    android:padding="24dp">
+
+    <!-- Botón volver -->
+    <ImageButton
+        android:id="@+id/btnVolverAgregar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/rounded_light_blue"
+        android:src="@drawable/ic_back"
+        android:contentDescription="Volver"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar Receta"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/btnVolverAgregar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <!-- Campo nombre -->
+    <EditText
+        android:id="@+id/etNombreReceta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nombre de la receta"
+        android:backgroundTint="@color/light_medium_blue"
+        android:padding="12dp"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp" />
+
+    <!-- Campo fecha -->
+    <EditText
+        android:id="@+id/etFechaReceta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Fecha (ej. 06/05/2025)"
+        android:backgroundTint="@color/light_medium_blue"
+        android:padding="12dp"
+        android:inputType="date"
+        app:layout_constraintTop_toBottomOf="@id/etNombreReceta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Botón guardar -->
+    <Button
+        android:id="@+id/btnGuardarReceta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        android:textStyle="bold"
+        android:backgroundTint="@color/boton"
+        app:layout_constraintTop_toBottomOf="@id/etFechaReceta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

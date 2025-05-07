@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/fragmentInicioSes">
+
     <fragment
         android:id="@+id/fragmentInicioSes"
         android:name="com.example.cuidale.FragmentInicioSes"
         android:label="fragment_inicio_ses"
-        tools:layout="@layout/fragment_inicio_ses" >
+        tools:layout="@layout/fragment_inicio_ses">
         <action
             android:id="@+id/action_fragmentInicioSes_to_fragmentRegistro"
             app:destination="@id/fragmentRegistro" />
@@ -16,16 +17,18 @@
             android:id="@+id/action_fragmentInicioSes_to_fragmentPantPrinc"
             app:destination="@id/fragmentPantPrinc" />
     </fragment>
+
     <fragment
         android:id="@+id/fragmentRegistro"
         android:name="com.example.cuidale.FragmentRegistro"
         android:label="fragment_registro"
         tools:layout="@layout/fragment_registro" />
+
     <fragment
         android:id="@+id/fragmentPantPrinc"
         android:name="com.example.cuidale.FragmentPantPrinc"
         android:label="fragment_pant_princ"
-        tools:layout="@layout/fragment_pant_princ" >
+        tools:layout="@layout/fragment_pant_princ">
         <action
             android:id="@+id/action_fragmentPantPrinc_to_fragmentMenuDesplegable"
             app:destination="@id/fragmentMenuDesplegable" />
@@ -33,20 +36,22 @@
             android:id="@+id/action_fragmentPantPrinc_to_fragmentFarmarcias"
             app:destination="@id/fragmentFarmarcias" />
     </fragment>
+
     <fragment
         android:id="@+id/fragmentMenuDesplegable"
         android:name="com.example.cuidale.FragmentMenuDesplegable"
         android:label="fragment_menu_desplegable"
-        tools:layout="@layout/fragment_menu_desplegable" >
+        tools:layout="@layout/fragment_menu_desplegable">
         <action
             android:id="@+id/action_fragmentMenuDesplegable_to_fragmentAjustes"
             app:destination="@id/fragmentAjustes" />
     </fragment>
+
     <fragment
         android:id="@+id/fragmentAjustes"
         android:name="com.example.cuidale.FragmentAjustes"
         android:label="fragment_ajustes"
-        tools:layout="@layout/fragment_ajustes" >
+        tools:layout="@layout/fragment_ajustes">
         <action
             android:id="@+id/action_fragmentAjustes_to_fragmentAyuda"
             app:destination="@id/fragmentAyuda" />
@@ -57,57 +62,76 @@
             android:id="@+id/action_fragmentAjustes_to_fragmentDatosPersonales"
             app:destination="@id/fragmentDatosPersonales" />
     </fragment>
+
     <fragment
         android:id="@+id/fragmentDatosPersonales"
         android:name="com.example.cuidale.FragmentDatosPersonales"
         android:label="fragment_datos_personales"
         tools:layout="@layout/fragment_datos_personales" />
+
     <fragment
         android:id="@+id/fragmentUsuario"
         android:name="com.example.cuidale.FragmentUsuario"
         android:label="fragment_usuario"
         tools:layout="@layout/fragment_usuario" />
+
     <fragment
         android:id="@+id/fragmentAyuda"
         android:name="com.example.cuidale.FragmentAyuda"
         android:label="FragmentAyuda" />
+
     <fragment
         android:id="@+id/fragmentSeguridad"
         android:name="com.example.cuidale.FragmentSeguridad"
         android:label="FragmentSeguridad" />
+
     <fragment
         android:id="@+id/fragmentUsuarioCuidador"
         android:name="com.example.cuidale.FragmentUsuarioCuidador"
         android:label="FragmentUsuarioCuidador" />
+
     <fragment
         android:id="@+id/fragmentRecordatorios"
         android:name="com.example.cuidale.FragmentRecordatorios"
         android:label="FragmentRecordatorios" />
+
     <fragment
         android:id="@+id/fragmentPastillero"
         android:name="com.example.cuidale.FragmentPastillero"
         android:label="FragmentPastillero" />
+
     <fragment
         android:id="@+id/fragmentRecetas"
         android:name="com.example.cuidale.FragmentRecetas"
-        android:label="FragmentRecetas" />
+        android:label="FragmentRecetas"
+        tools:layout="@layout/fragment_recetas" />
+
+    <fragment
+        android:id="@+id/fragmentAgregarReceta"
+        android:name="com.example.cuidale.FragmentAgregarReceta"
+        android:label="FragmentAgregarReceta"
+        tools:layout="@layout/fragment_agregar_receta" />
+
     <fragment
         android:id="@+id/fragmentHistorial"
         android:name="com.example.cuidale.FragmentHistorial"
         android:label="fragment_historial"
         tools:layout="@layout/fragment_historial" />
+
     <fragment
         android:id="@+id/fragmentFarmarcias"
         android:name="com.example.cuidale.FragmentFarmarcias"
         android:label="fragment_farmarcias"
-        tools:layout="@layout/fragment_farmarcias" >
+        tools:layout="@layout/fragment_farmarcias">
         <action
             android:id="@+id/action_fragmentFarmarcias_to_fragmentPantPrinc"
             app:destination="@id/fragmentPantPrinc" />
     </fragment>
+
     <fragment
         android:id="@+id/fragmentCalendario"
         android:name="com.example.cuidale.FragmentCalendario"
         android:label="fragment_calendario"
         tools:layout="@layout/fragment_calendario" />
+
 </navigation>
