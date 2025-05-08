@@ -14,13 +14,9 @@ import android.widget.ImageView;
 
 public class FragmentPastillero extends Fragment {
     private View v;
-
     private ImageButton atras;
-
     private ImageButton add;
-
     private ImageView menu;
-
     private ImageView cuenta;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

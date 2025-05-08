@@ -50,9 +50,9 @@ public class FirebaseDataManager {
     }
 
     // Método para insertar los datos del usuario en Firebase Database
-    public void insertarUsuario(String dni, Usuario usuario, OnUserInsertedListener listener) {
+    public void insertarUsuario(String id, Usuario usuario, OnUserInsertedListener listener) {
         // Intentar insertar el usuario en la base de datos
-        databaseReference.child(dni).setValue(usuario)
+        databaseReference.child(id).setValue(usuario)
                 .addOnSuccessListener(aVoid -> {
                     // Si la inserción es exitosa
                     listener.onSuccess();
@@ -79,14 +79,16 @@ public class FirebaseDataManager {
     public static class Usuario {
         public String nombre;
         public String correo;
+        public String dni;
 
         public Usuario() {
             // Constructor vacío necesario para Firebase
         }
 
-        public Usuario(String nombre, String correo) {
+        public Usuario(String nombre, String correo, String dni) {
             this.nombre = nombre;
             this.correo = correo;
+            this.dni = dni;
         }
     }
 }

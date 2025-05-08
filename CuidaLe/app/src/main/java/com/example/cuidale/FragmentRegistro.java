@@ -95,8 +95,8 @@ public class FragmentRegistro extends Fragment {
                                         Log.i("Registro", "✅ Usuario registrado en Firebase");
 
                                         // Solo registrar el usuario en la base de datos si Firebase Authentication fue exitoso
-                                        FirebaseDataManager.Usuario usuario = new FirebaseDataManager.Usuario(userText, correoText);
-                                        dataManager.insertarUsuario(dniText, usuario, new FirebaseDataManager.OnUserInsertedListener() {
+                                        FirebaseDataManager.Usuario usuario = new FirebaseDataManager.Usuario(userText, correoText, dniText);
+                                        dataManager.insertarUsuario(user.getUid(), usuario, new FirebaseDataManager.OnUserInsertedListener() {
                                             @Override
                                             public void onSuccess() {
                                                 // Usuario insertado correctamente en la base de datos
