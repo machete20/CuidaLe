@@ -2,16 +2,30 @@ package com.example.cuidale;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class FragmentUsuarioCuidador extends Fragment {
 
@@ -20,34 +34,121 @@ public class FragmentUsuarioCuidador extends Fragment {
     private ImageButton atras;
     private ImageView menu;
     private LinearLayout usuario;
-
+    private TextView nomUsu;
+    private TextView correoUsu;
+    private TextView dniUsu;
+    private Button cerrarSesion;
+    private Button datos;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        v= inflater.inflate(R.layout.fragment_usuariocuidador, container, false);
+        v = inflater.inflate(R.layout.fragment_usuariocuidador, container, false);
 
-        
+        nomUsu = v.findViewById(R.id.nombreUsuario);
+        correoUsu = v.findViewById(R.id.correoUsuario);
+        dniUsu = v.findViewById(R.id.dniUsuario);
+
         menu = v.findViewById(R.id.menuDesplegableUsuario);
 
-        menu.setOnClickListener(v->{
+
+        menu.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentMenuDesplegable);
         });
 
+        datos=v.findViewById(R.id.cambiar);
+
+        datos.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentDatosPersonales);
+        });
         usuario = v.findViewById(R.id.UsuarioCuenta);
 
-        usuario.setOnClickListener(v->{
+        usuario.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentUsuario);
         });
 
         atras = v.findViewById(R.id.btn_retroceso);
 
-        atras.setOnClickListener(v->{
+        atras.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.popBackStack();
         });
+
+        cerrarSesion = v.findViewById(R.id.btnLogoutC);
+
+        cerrarSesion.setOnClickListener(v -> {
+            // Cerrar la sesión
+            AuthManager manager = new AuthManager(requireContext()); // Pasar el contexto
+            manager.cerrarSesion();
+            // Obtener el NavController y navegar al fragmento de inicio de sesión
+            NavController navController = Navigation.findNavController(v);
+            // Usar popUpTo para asegurarse de que no se pueda volver atrás al fragmento previo
+            navController.navigate(R.id.fragmentInicioSes, null,
+                    new NavOptions.Builder()
+                            .setPopUpTo(R.id.fragmentInicioSes, true) // PopUp hasta el fragmento de inicio sesión
+                            .build());
+        });
+
         return v;
     }
+
+    public void onStart() {
+        super.onStart();
+        // Llamar a obtenerDatosUsuario cada vez que el fragmento se haga visible
+        obtenerDatosUsuario();
+    }
+
+    private void obtenerDatosUsuario() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        // Verificar si el usuario está autenticado
+        if (user != null) {
+            Log.d("Firebase", "Usuario autenticado"); // Verifica si el usuario está autenticado
+            String uid = user.getUid();
+
+            // Actualizamos la URL para la base de datos de Firebase
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app");
+            DatabaseReference ref = database.getReference("usuarios").child(uid);
+
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        Log.d("Firebase", "Datos encontrados en Firebase"); // Si los datos existen
+
+                        // Si los datos del usuario existen en la base de datos
+                        String nombre = snapshot.child("nombre").getValue(String.class);
+                        String correo = snapshot.child("correo").getValue(String.class);
+                        String dni = snapshot.child("dni").getValue(String.class);
+
+                        // Asegurarse de actualizar las vistas con los datos obtenidos en el hilo principal
+                        requireActivity().runOnUiThread(() -> {
+                            nomUsu.setText(nombre);
+                            correoUsu.setText(correo);
+                            dniUsu.setText(dni);
+                        });
+                    } else {
+                        // Si no se encuentran datos para este usuario
+                        Log.d("Firebase", "No se encontraron datos para este usuario");
+                        Toast.makeText(getContext(), "No se encontraron datos para este usuario", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Si ocurre un error al consultar la base de datos
+                    Log.e("Firebase", "Error al consultar los datos: " + error.getMessage());
+                    Toast.makeText(getContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            // Si el usuario no está autenticado
+            Log.d("Firebase", "No hay usuario autenticado");
+            Toast.makeText(getContext(), "No hay usuario autenticado", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
