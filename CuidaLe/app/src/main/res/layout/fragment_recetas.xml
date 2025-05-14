@@ -91,12 +91,13 @@
         android:id="@+id/btn_retrocesoRecetas"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/rounded_light_blue"
         android:contentDescription="Back"
         android:src="@drawable/ic_back"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Delete Button -->
     <!-- Delete Button (Papelera) -->
@@ -106,10 +107,11 @@
         android:id="@+id/btnEliminarReceta"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="82dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/rounded_light_blue"
         android:contentDescription="Eliminar"
-        android:elevation="10dp"
         android:src="@drawable/ic_papelera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,11 +124,12 @@
         android:id="@+id/addButtonRecetas"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/rounded_light_blue"
         android:contentDescription="Añadir"
         android:src="@drawable/anadir"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
