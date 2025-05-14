@@ -15,6 +15,10 @@ import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
+import android.content.SharedPreferences;
+import android.content.Context;
 
 import es.dmoral.toasty.Toasty;
 
@@ -99,6 +103,12 @@ public class FragmentRegistro extends Fragment {
                                         dataManager.insertarUsuario(dniText, usuario, new FirebaseDataManager.OnUserInsertedListener() {
                                             @Override
                                             public void onSuccess() {
+                                                //Mapeo UID --- DNI
+                                                FirebaseDatabase.getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
+                                                        .getReference("usuariosPorUid").child(user.getUid()).setValue(dniText);
+                                                //Guardar DNI local
+                                                SharedPreferences prefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                                prefs.edit().putString("dni", dniText).apply();
                                                 // Usuario insertado correctamente en la base de datos
                                                 Toasty.success(requireContext(), "Registro completado. Ahora inicia sesión.", Toast.LENGTH_SHORT, true).show();
                                                 NavController navController = Navigation.findNavController(v);
