@@ -173,7 +173,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linea7" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/switchNotificaciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:foregroundTint="@color/sky_blue"

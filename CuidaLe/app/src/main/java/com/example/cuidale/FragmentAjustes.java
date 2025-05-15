@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class FragmentAjustes extends Fragment {
@@ -20,6 +21,7 @@ public class FragmentAjustes extends Fragment {
     private TextView ayuda;
 
     private ImageView atras;
+    private Switch notificaciones;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,6 +29,8 @@ public class FragmentAjustes extends Fragment {
         v = inflater.inflate(R.layout.fragment_ajustes,container,false);
 
         datos = v.findViewById(R.id.Texto1);
+
+        notificaciones = v.findViewById(R.id.switchNotificaciones);
 
         datos.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
