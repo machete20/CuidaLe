@@ -53,9 +53,11 @@ public class FragmentDatosPersonales extends Fragment {
         SharedPreferences prefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String dni = prefs.getString("dni", null);
 
+        // 🔴 CAMBIO CLAVE: ahora accedemos a usuarios/UID
         if (dni != null) {
+            String uid = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser().getUid();
             userRef = FirebaseDatabase.getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
-                    .getReference("usuarios").child(dni);
+                    .getReference("usuarios").child(uid);
             cargarDatosUsuario();
         } else {
             Toast.makeText(getContext(), "No se encontró el DNI. Vuelve a registrarte.", Toast.LENGTH_SHORT).show();
@@ -74,12 +76,13 @@ public class FragmentDatosPersonales extends Fragment {
                 if (snapshot.exists()) {
                     String nombre = snapshot.child("nombre").getValue(String.class);
                     String correo = snapshot.child("correo").getValue(String.class);
+                    String dni = snapshot.child("dni").getValue(String.class);
 
                     etNombre.setText(nombre);
                     etCorreo.setText(correo);
-                    etDNI.setText(userRef.getKey());
+                    etDNI.setText(dni);
 
-                    // Sergio anade estos datos en el firebase
+                    // Cargar también los nuevos campos si existen
                     etPrimerApellido.setText(snapshot.child("primerApellido").getValue(String.class));
                     etSegundoApellido.setText(snapshot.child("segundoApellido").getValue(String.class));
                     etDireccion.setText(snapshot.child("direccion").getValue(String.class));
@@ -102,6 +105,7 @@ public class FragmentDatosPersonales extends Fragment {
         String primerApellido = etPrimerApellido.getText().toString().trim();
         String segundoApellido = etSegundoApellido.getText().toString().trim();
         String direccion = etDireccion.getText().toString().trim();
+        String dni = etDNI.getText().toString().trim();
 
         // Validaciones
         if (nombre.isEmpty()) {
@@ -128,6 +132,7 @@ public class FragmentDatosPersonales extends Fragment {
         userRef.child("primerApellido").setValue(primerApellido);
         userRef.child("segundoApellido").setValue(segundoApellido);
         userRef.child("direccion").setValue(direccion);
+        userRef.child("dni").setValue(dni);
 
         Toast.makeText(getContext(), "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
     }

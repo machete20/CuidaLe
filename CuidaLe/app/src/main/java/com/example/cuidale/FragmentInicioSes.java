@@ -85,6 +85,9 @@ public class FragmentInicioSes extends Fragment {
                                 if (dni != null) {
                                     SharedPreferences prefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                                     prefs.edit().putString("dni", dni).apply();
+
+                                    Toasty.info(requireContext(), "DNI cargado correctamente", Toast.LENGTH_SHORT, true).show();
+
                                 }
                             }
 
