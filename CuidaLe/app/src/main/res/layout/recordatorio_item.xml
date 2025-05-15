@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,7 +13,8 @@
         android:padding="12dp"
         android:background="@color/fondo"
         android:gravity="center_vertical"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        tools:ignore="MissingConstraints">
 
         <ImageView
             android:layout_width="40dp"
@@ -45,15 +47,18 @@
             android:id="@+id/switchRecordatorio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="false" />
+            android:checked="false"
+            android:minWidth="48dp"
+            android:minHeight="48dp" />
 
         <ImageButton
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/securitycheck"
+            android:layout_alignParentEnd="true"
             android:contentDescription="Eliminar recordatorio"
-            android:layout_alignParentEnd="true"/>
+            android:src="@drawable/ic_papelera"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
 
