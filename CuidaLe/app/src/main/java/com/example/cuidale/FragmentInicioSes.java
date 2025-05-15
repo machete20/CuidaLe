@@ -12,6 +12,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
 import es.dmoral.toasty.Toasty;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+import androidx.annotation.NonNull;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+
+
 
 public class FragmentInicioSes extends Fragment {
     private View v;
@@ -59,6 +71,32 @@ public class FragmentInicioSes extends Fragment {
             manager.iniciarSesion(email, pass, new AuthManager.AuthCallback() {
                 @Override
                 public void onSuccess(FirebaseUser firebaseUser) {
+
+                    FirebaseUser userFirebase = FirebaseAuth.getInstance().getCurrentUser();
+                    if (userFirebase != null) {
+                        String uid = userFirebase.getUid();
+                        DatabaseReference ref = FirebaseDatabase.getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
+                                .getReference("usuariosPorUid").child(uid);
+
+                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String dni = snapshot.getValue(String.class);
+                                if (dni != null) {
+                                    SharedPreferences prefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                    prefs.edit().putString("dni", dni).apply();
+
+                                    Toasty.info(requireContext(), "DNI cargado correctamente", Toast.LENGTH_SHORT, true).show();
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.e("InicioSesion", "Error obteniendo DNI: " + error.getMessage());
+                            }
+                        });
+                    }
                     Toasty.success(requireContext(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT, true).show();
                     NavController navController = Navigation.findNavController(view);
                     navController.navigate(R.id.fragmentPantPrinc); // Navegar a la pantalla principal

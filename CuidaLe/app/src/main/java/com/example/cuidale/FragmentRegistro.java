@@ -15,6 +15,10 @@ import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
+import android.content.SharedPreferences;
+import android.content.Context;
 
 import es.dmoral.toasty.Toasty;
 
@@ -79,14 +83,12 @@ public class FragmentRegistro extends Fragment {
             dataManager.verificarYRegistrarUsuario(dniText, userText, correoText, new FirebaseDataManager.OnDniCheckListener() {
                 @Override
                 public void onDniExist() {
-                    // Mostrar mensaje en caso de que el DNI ya exista
                     Toasty.error(requireContext(), "Este DNI ya está registrado.", Toast.LENGTH_SHORT, true).show();
                     registro.setEnabled(true);
                 }
 
                 @Override
                 public void onDniDoesNotExist() {
-                    // Continuar con el proceso de registro si el DNI no existe
                     mAuth.createUserWithEmailAndPassword(correoText, passwordText)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
@@ -94,20 +96,25 @@ public class FragmentRegistro extends Fragment {
                                     if (user != null) {
                                         Log.i("Registro", "✅ Usuario registrado en Firebase");
 
-                                        // Solo registrar el usuario en la base de datos si Firebase Authentication fue exitoso
+                                        Toasty.success(requireContext(), "Usuario creado. Guardando datos...", Toast.LENGTH_SHORT, true).show();
+
                                         FirebaseDataManager.Usuario usuario = new FirebaseDataManager.Usuario(userText, correoText, dniText);
                                         dataManager.insertarUsuario(user.getUid(), usuario, new FirebaseDataManager.OnUserInsertedListener() {
                                             @Override
                                             public void onSuccess() {
-                                                // Usuario insertado correctamente en la base de datos
+                                                FirebaseDatabase.getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
+                                                        .getReference("usuariosPorUid").child(user.getUid()).setValue(dniText);
+
+                                                SharedPreferences prefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                                prefs.edit().putString("dni", dniText).apply();
+
                                                 Toasty.success(requireContext(), "Registro completado. Ahora inicia sesión.", Toast.LENGTH_SHORT, true).show();
                                                 NavController navController = Navigation.findNavController(v);
-                                                navController.navigate(R.id.fragmentInicioSes); // Navegar a la pantalla de inicio de sesión
+                                                navController.navigate(R.id.fragmentInicioSes);
                                             }
 
                                             @Override
                                             public void onFailure(String errorMessage) {
-                                                // Si falla la inserción en la base de datos
                                                 Toasty.error(requireContext(), "Error al guardar los datos del usuario: " + errorMessage, Toast.LENGTH_SHORT, true).show();
                                             }
                                         });
@@ -115,7 +122,6 @@ public class FragmentRegistro extends Fragment {
                                 } else {
                                     Toasty.error(requireContext(), "Error el DNI puede estar ya registrado", Toast.LENGTH_SHORT, true).show();
                                 }
-                                // Rehabilitar el botón en ambos casos (exitoso o fallido)
                                 registro.setEnabled(true);
                             });
                 }
@@ -125,12 +131,10 @@ public class FragmentRegistro extends Fragment {
         return v;
     }
 
-    // Método para validar el formato del correo electrónico
     private boolean isValidEmail(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    // Método para validar el formato del DNI
     private boolean isValidDNI(String dni) {
         if (dni.length() != 9) return false;
         String numeros = dni.substring(0, 8);
