@@ -61,7 +61,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Texto1"
+        app:layout_constraintTop_toBottomOf="@+id/contrasenaSeguridad"
         tools:ignore="Autofill,LabelFor,MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <EditText
@@ -104,7 +104,7 @@
         tools:ignore="Autofill,LabelFor,MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/Texto1"
+        android:id="@+id/contrasenaSeguridad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -180,7 +180,7 @@
         android:scaleX="1.12"
         android:scaleY="1.12"
         android:src="@drawable/key"
-        app:layout_constraintEnd_toStartOf="@+id/Texto1"
+        app:layout_constraintEnd_toStartOf="@+id/contrasenaSeguridad"
         app:layout_constraintTop_toBottomOf="@+id/linea" />
 
     <ImageView
