@@ -30,7 +30,7 @@ public class FragmentMenuDesplegable extends Fragment {
     private TextView recetas;
 
     private TextView historial;
-
+    private TextView farmacia;
     private TextView inicio;
 
     private TextView calendario;
@@ -88,6 +88,13 @@ public class FragmentMenuDesplegable extends Fragment {
         recetas.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentRecetas);
+        });
+
+        farmacia = v.findViewById(R.id.farmaciaMenu);
+
+        farmacia.setOnClickListener(v->{
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.fragmentFarmarcias);
         });
 
         historial = v.findViewById(R.id.HistorialMenu);

@@ -35,7 +35,7 @@
             app:layout_constraintTop_toBottomOf="@+id/CuentaMenu" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/farmaciaMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
@@ -56,7 +56,7 @@
             android:textSize="34sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+            app:layout_constraintTop_toBottomOf="@+id/farmaciaMenu" />
 
         <TextView
             android:id="@+id/RecordatorioMenu"
