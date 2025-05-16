@@ -133,5 +133,10 @@
         android:name="com.example.cuidale.FragmentCalendario"
         android:label="fragment_calendario"
         tools:layout="@layout/fragment_calendario" />
+    <fragment
+        android:id="@+id/fragmentContrasena"
+        android:name="com.example.cuidale.FragmentContrasena"
+        android:label="fragment_contrasena"
+        tools:layout="@layout/fragment_contrasena" />
 
 </navigation>
