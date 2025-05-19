@@ -10,47 +10,60 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.MedicationViewHolder> {
+public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.ViewHolder> {
+    private List<Medication> lista;
 
-    private List<Medication> medicationList;
+    public interface OnMedicationChangeListener {
+        void onMedicationChanged();
+    }
 
-    public MedicationAdapter(List<Medication> medicationList) {
-        this.medicationList = medicationList;
+    private OnMedicationChangeListener listener;
+
+    public MedicationAdapter(List<Medication> lista) {
+        this.lista = lista;
+    }
+
+    public void setOnMedicationChangeListener(OnMedicationChangeListener listener) {
+        this.listener = listener;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView horaTextView;
+        public TextView nombreTextView;
+        public CheckBox checkBox;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            horaTextView = itemView.findViewById(R.id.textHora);
+            nombreTextView = itemView.findViewById(R.id.textNombre);
+            checkBox = itemView.findViewById(R.id.checkboxTomado);
+        }
     }
 
     @Override
-    public MedicationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MedicationAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_medicamento, parent, false);
-        return new MedicationViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MedicationViewHolder holder, int position) {
-        Medication med = medicationList.get(position);
-        holder.textHora.setText(med.getHora());
-        holder.textNombre.setText(med.getNombre());
-        holder.checkTomado.setChecked(med.isTomado());
+    public void onBindViewHolder(MedicationAdapter.ViewHolder holder, int position) {
+        Medication medicamento = lista.get(position);
 
-        holder.checkTomado.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            med.setTomado(isChecked);
+        holder.horaTextView.setText(medicamento.getHora());
+        holder.nombreTextView.setText(medicamento.getNombre());
+        holder.checkBox.setChecked(medicamento.isTomada());
+
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            medicamento.setTomada(isChecked);
+            if (listener != null) {
+                listener.onMedicationChanged();  // Notifica para guardar
+            }
         });
     }
 
     @Override
     public int getItemCount() {
-        return medicationList.size();
-    }
-
-    public static class MedicationViewHolder extends RecyclerView.ViewHolder {
-        TextView textHora;
-        TextView textNombre;
-        CheckBox checkTomado;
-
-        public MedicationViewHolder(View itemView) {
-            super(itemView);
-            textHora = itemView.findViewById(R.id.textHora);
-            textNombre = itemView.findViewById(R.id.textMedicamento);
-            checkTomado = itemView.findViewById(R.id.checkTomado);
-        }
+        return lista.size();
     }
 }
