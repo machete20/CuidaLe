@@ -13,27 +13,11 @@ public class Medication {
         this.seleccionado = false;
     }
 
-    public String getHora() {
-        return hora;
-    }
+    public String getHora() { return hora; }
+    public String getNombre() { return nombre; }
+    public boolean isTomada() { return tomada; }
+    public void setTomada(boolean tomada) { this.tomada = tomada; }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public boolean isTomada() {
-        return tomada;
-    }
-
-    public void setTomada(boolean tomada) {
-        this.tomada = tomada;
-    }
-
-    public boolean isSeleccionado() {
-        return seleccionado;
-    }
-
-    public void setSeleccionado(boolean seleccionado) {
-        this.seleccionado = seleccionado;
-    }
+    public boolean isSeleccionado() { return seleccionado; }
+    public void setSeleccionado(boolean seleccionado) { this.seleccionado = seleccionado; }
 }
