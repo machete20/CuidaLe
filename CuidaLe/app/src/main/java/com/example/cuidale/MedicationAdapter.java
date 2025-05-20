@@ -1,11 +1,13 @@
 package com.example.cuidale;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -27,7 +29,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Vi
         this.listener = listener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView horaTextView;
         public TextView nombreTextView;
         public CheckBox checkBox;
@@ -38,16 +40,21 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Vi
             nombreTextView = itemView.findViewById(R.id.textNombre);
             checkBox = itemView.findViewById(R.id.checkboxTomado);
         }
+
+        public void bind(Medication medicamento) {
+            itemView.setBackgroundColor(medicamento.isSeleccionado() ? Color.LTGRAY : Color.TRANSPARENT);
+        }
     }
 
+    @NonNull
     @Override
-    public MedicationAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MedicationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_medicamento, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MedicationAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MedicationAdapter.ViewHolder holder, int position) {
         Medication medicamento = lista.get(position);
 
         holder.horaTextView.setText(medicamento.getHora());
@@ -57,13 +64,27 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Vi
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             medicamento.setTomada(isChecked);
             if (listener != null) {
-                listener.onMedicationChanged();  // Notifica para guardar
+                listener.onMedicationChanged();
             }
         });
+
+        // Manejamos la selección manual al hacer clic
+        holder.itemView.setOnClickListener(v -> {
+            medicamento.setSeleccionado(!medicamento.isSeleccionado());
+            notifyItemChanged(position);
+        });
+
+        holder.bind(medicamento);
     }
 
     @Override
     public int getItemCount() {
         return lista.size();
+    }
+
+    public void eliminarSeleccionados() {
+        lista.removeIf(Medication::isSeleccionado);
+        notifyDataSetChanged();
+        if (listener != null) listener.onMedicationChanged();
     }
 }

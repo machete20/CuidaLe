@@ -152,16 +152,29 @@
         android:layout_marginBottom="16dp" />
 
     <!-- Botón Añadir -->
+
     <ImageButton
-        android:id="@+id/addButtonPastillero"
+        android:id="@+id/deleteButtonPastillero"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_light_blue"
-        android:src="@drawable/anadir"
         android:contentDescription="Añadir"
+        android:src="@drawable/ic_papelera"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/addButtonPastillero3"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_light_blue"
+        android:contentDescription="Añadir"
+        android:src="@drawable/anadir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
