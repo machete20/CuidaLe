@@ -36,14 +36,14 @@ public class FragmentPantPrinc extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_pant_princ,container,false);
 
-        cuenta = v.findViewById(R.id.IMGcuentaPrincp);
+        cuenta = v.findViewById(R.id.cuentaPastillero);
 
         cuenta.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentUsuarioCuidador);
         });
 
-        menu = v.findViewById(R.id.IMGmenuPrincp);
+        menu = v.findViewById(R.id.menuPastillero);
 
         menu.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);

@@ -34,14 +34,14 @@ public class FragmentHistorial extends Fragment {
             navController.navigate(R.id.fragmentPantPrinc);
         });
 
-        menu = v.findViewById(R.id.IMGmenuPrincpHistorial);
+        menu = v.findViewById(R.id.menuPastillero);
 
         menu.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentMenuDesplegable);
         });
 
-        cuenta = v.findViewById(R.id.IMGcuentaPrincpHistorial);
+        cuenta = v.findViewById(R.id.cuentaPastillero);
 
         cuenta.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
