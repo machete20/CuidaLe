@@ -48,7 +48,7 @@ public class FragmentCalendario extends Fragment {
         // Infla el layout del fragmento
         View rootView = inflater.inflate(R.layout.fragment_calendario, container, false);
 
-        menu = rootView.findViewById(R.id.menuDesplegableCalendario);
+        menu = rootView.findViewById(R.id.menuPastillero);
 
         menu.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);

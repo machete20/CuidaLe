@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +43,7 @@ public class FragmentPastillero extends Fragment {
 
         atras = v.findViewById(R.id.backButtonPastillero);
         menu = v.findViewById(R.id.menuPastillero);
-        cuenta = v.findViewById(R.id.cuentaPastillero);
+        cuenta = v.findViewById(R.id.cuentaFarmacias);
         add = v.findViewById(R.id.addButtonPastillero3);
         delete = v.findViewById(R.id.deleteButtonPastillero);
         recyclerView = v.findViewById(R.id.medicationRecyclerView);

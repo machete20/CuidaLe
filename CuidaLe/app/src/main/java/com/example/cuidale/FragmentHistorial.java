@@ -41,7 +41,7 @@ public class FragmentHistorial extends Fragment {
             navController.navigate(R.id.fragmentMenuDesplegable);
         });
 
-        cuenta = v.findViewById(R.id.cuentaPastillero);
+        cuenta = v.findViewById(R.id.cuentaFarmacias);
 
         cuenta.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);

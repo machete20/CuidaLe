@@ -10,12 +10,8 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import es.dmoral.toasty.Toasty;
 
 public class FragmentPantPrinc extends Fragment {
 
@@ -36,7 +32,7 @@ public class FragmentPantPrinc extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_pant_princ,container,false);
 
-        cuenta = v.findViewById(R.id.cuentaPastillero);
+        cuenta = v.findViewById(R.id.cuentaFarmacias);
 
         cuenta.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);

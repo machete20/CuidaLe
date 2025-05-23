@@ -56,7 +56,8 @@ public class FragmentRecordatorios extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_recordatorios, container, false);
 
-        menu = v.findViewById(R.id.menuDesplegableRecordatorios);
+        menu = v.findViewById(R.id.menuRecordatorios
+        );
 
         menu.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);
