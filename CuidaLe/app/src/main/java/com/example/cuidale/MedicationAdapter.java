@@ -1,56 +1,90 @@
 package com.example.cuidale;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.MedicationViewHolder> {
+public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.ViewHolder> {
+    private List<Medication> lista;
 
-    private List<Medication> medicationList;
-
-    public MedicationAdapter(List<Medication> medicationList) {
-        this.medicationList = medicationList;
+    public interface OnMedicationChangeListener {
+        void onMedicationChanged();
     }
 
+    private OnMedicationChangeListener listener;
+
+    public MedicationAdapter(List<Medication> lista) {
+        this.lista = lista;
+    }
+
+    public void setOnMedicationChangeListener(OnMedicationChangeListener listener) {
+        this.listener = listener;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView horaTextView;
+        public TextView nombreTextView;
+        public CheckBox checkBox;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            horaTextView = itemView.findViewById(R.id.textHora);
+            nombreTextView = itemView.findViewById(R.id.textNombre);
+            checkBox = itemView.findViewById(R.id.checkboxTomado);
+        }
+
+        public void bind(Medication medicamento) {
+            itemView.setBackgroundColor(medicamento.isSeleccionado() ? Color.LTGRAY : Color.TRANSPARENT);
+        }
+    }
+
+    @NonNull
     @Override
-    public MedicationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MedicationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_medicamento, parent, false);
-        return new MedicationViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MedicationViewHolder holder, int position) {
-        Medication med = medicationList.get(position);
-        holder.textHora.setText(med.getHora());
-        holder.textNombre.setText(med.getNombre());
-        holder.checkTomado.setChecked(med.isTomado());
+    public void onBindViewHolder(@NonNull MedicationAdapter.ViewHolder holder, int position) {
+        Medication medicamento = lista.get(position);
 
-        holder.checkTomado.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            med.setTomado(isChecked);
+        holder.horaTextView.setText(medicamento.getHora());
+        holder.nombreTextView.setText(medicamento.getNombre());
+        holder.checkBox.setChecked(medicamento.isTomada());
+
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            medicamento.setTomada(isChecked);
+            if (listener != null) {
+                listener.onMedicationChanged();
+            }
         });
+
+        // Manejamos la selección manual al hacer clic
+        holder.itemView.setOnClickListener(v -> {
+            medicamento.setSeleccionado(!medicamento.isSeleccionado());
+            notifyItemChanged(position);
+        });
+
+        holder.bind(medicamento);
     }
 
     @Override
     public int getItemCount() {
-        return medicationList.size();
+        return lista.size();
     }
 
-    public static class MedicationViewHolder extends RecyclerView.ViewHolder {
-        TextView textHora;
-        TextView textNombre;
-        CheckBox checkTomado;
-
-        public MedicationViewHolder(View itemView) {
-            super(itemView);
-            textHora = itemView.findViewById(R.id.textHora);
-            textNombre = itemView.findViewById(R.id.textMedicamento);
-            checkTomado = itemView.findViewById(R.id.checkTomado);
-        }
+    public void eliminarSeleccionados() {
+        lista.removeIf(Medication::isSeleccionado);
+        notifyDataSetChanged();
+        if (listener != null) listener.onMedicationChanged();
     }
 }

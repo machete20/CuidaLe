@@ -41,7 +41,7 @@ public class FragmentRecetas extends Fragment {
         ImageView menu = v.findViewById(R.id.menuRecetas);
         menu.setOnClickListener(view -> Navigation.findNavController(v).navigate(R.id.fragmentMenuDesplegable));
 
-        ImageView cuenta = v.findViewById(R.id.PerfilRecetas);
+        ImageView cuenta = v.findViewById(R.id.cuentaRecetas);
         cuenta.setOnClickListener(view -> Navigation.findNavController(v).navigate(R.id.fragmentUsuarioCuidador));
 
         ImageButton add = v.findViewById(R.id.addButtonRecetas);

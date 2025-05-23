@@ -1,36 +1,40 @@
 package com.example.cuidale;
 
-import android.app.AlertDialog;
-import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 public class FragmentPastillero extends Fragment {
     private View v;
     private ImageButton atras;
     private ImageButton add;
+    private ImageButton delete;
     private ImageView menu;
     private ImageView cuenta;
     private RecyclerView recyclerView;
     private MedicationAdapter adapter;
     private List<Medication> medicamentos;
+
+    private final String PREFS_NAME = "med_prefs";
+    private final String KEY_LISTA = "medicamentos";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,80 +43,72 @@ public class FragmentPastillero extends Fragment {
 
         atras = v.findViewById(R.id.backButtonPastillero);
         menu = v.findViewById(R.id.menuPastillero);
-        cuenta = v.findViewById(R.id.cuentaPastillero);
-        add = v.findViewById(R.id.addButtonPastillero);
+        cuenta = v.findViewById(R.id.cuentaFarmacias);
+        add = v.findViewById(R.id.addButtonPastillero3);
+        delete = v.findViewById(R.id.deleteButtonPastillero);
         recyclerView = v.findViewById(R.id.medicationRecyclerView);
 
-        // Setup del RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        medicamentos = new ArrayList<>(Arrays.asList(
-                new Medication("08:00", "Ibuprofeno", true),
-                new Medication("12:00", "Paracetamol", true),
-                new Medication("20:00", "Omeprazol", false)
-        ));
+        medicamentos = cargarMedicamentos();
 
         adapter = new MedicationAdapter(medicamentos);
         recyclerView.setAdapter(adapter);
 
-        // Navegaciones
-        atras.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.fragmentPantPrinc);
+        // Guardar cada vez que cambie algo
+        adapter.setOnMedicationChangeListener(this::guardarMedicamentos);
+
+        atras.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.fragmentPantPrinc));
+        menu.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.fragmentMenuDesplegable));
+        cuenta.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.fragmentUsuarioCuidador));
+
+        add.setOnClickListener(v -> {
+            AddMedicationDialog dialog = new AddMedicationDialog(medicamento -> {
+                medicamentos.add(medicamento);
+                adapter.notifyItemInserted(medicamentos.size() - 1);
+                guardarMedicamentos();
+            });
+            dialog.show(getChildFragmentManager(), "AddMedicationDialog");
         });
 
-        menu.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.fragmentMenuDesplegable);
-        });
+        delete.setOnClickListener(v -> {
+            boolean algunoSeleccionado = false;
+            for (Medication m : medicamentos) {
+                if (m.isSeleccionado()) {
+                    algunoSeleccionado = true;
+                    break;
+                }
+            }
 
-        cuenta.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.fragmentUsuarioCuidador);
+            if (!algunoSeleccionado) {
+                Toast.makeText(getContext(), "Ningún elemento seleccionado para borrar", Toast.LENGTH_SHORT).show();
+            } else {
+                medicamentos.removeIf(Medication::isSeleccionado);
+                adapter.notifyDataSetChanged();
+                guardarMedicamentos();
+            }
         });
-
-        // Botón Añadir
-        add.setOnClickListener(v -> showAddMedicineDialog());
 
         return v;
     }
 
-    private void showAddMedicineDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_add_medicine, null);
-        builder.setView(dialogView);
+    private void guardarMedicamentos() {
+        SharedPreferences prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(medicamentos);
+        editor.putString(KEY_LISTA, json);
+        editor.apply();
+    }
 
-        final EditText editTextMedicineName = dialogView.findViewById(R.id.editTextMedicineName);
-        final EditText editTextTime = dialogView.findViewById(R.id.editTextTime);
-
-        // Listener para abrir selector de hora
-        editTextTime.setOnClickListener(v -> {
-            final Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
-
-            TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), (TimePicker view, int hourOfDay, int minute1) -> {
-                String formattedTime = String.format("%02d:%02d", hourOfDay, minute1);
-                editTextTime.setText(formattedTime);
-            }, hour, minute, true); // true para formato 24h
-
-            timePickerDialog.show();
-        });
-
-        builder.setTitle("Añadir Medicamento");
-        builder.setPositiveButton("Añadir", (dialog, which) -> {
-            String medicineName = editTextMedicineName.getText().toString().trim();
-            String time = editTextTime.getText().toString().trim();
-
-            if (!medicineName.isEmpty() && !time.isEmpty()) {
-                medicamentos.add(new Medication(time, medicineName, false));
-                adapter.notifyItemInserted(medicamentos.size() - 1);
-            }
-        });
-
-        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
-
-        builder.create().show();
+    private List<Medication> cargarMedicamentos() {
+        SharedPreferences prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String json = prefs.getString(KEY_LISTA, null);
+        if (json != null) {
+            Gson gson = new Gson();
+            Type tipoLista = new TypeToken<List<Medication>>() {}.getType();
+            return gson.fromJson(json, tipoLista);
+        } else {
+            return new ArrayList<>();
+        }
     }
 }

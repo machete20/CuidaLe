@@ -61,7 +61,7 @@ public class FragmentFarmarcias extends Fragment {
             navController.navigate(R.id.fragmentMenuDesplegable);
         });
 
-        cuenta = v.findViewById(R.id.PerfilFarmacias);
+        cuenta = v.findViewById(R.id.cuentaFarmacias);
 
         cuenta.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);

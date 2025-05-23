@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo"
     tools:context=".FragmentFarmarcias">
 
 
@@ -28,24 +29,21 @@
                 android:id="@+id/menuFarmacias"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_marginStart="16dp"
                 android:src="@drawable/barras"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.957"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/PerfilFarmacias"
+                android:id="@+id/cuentaFarmacias"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
                 android:src="@drawable/usuario"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/menuFarmacias"
-                app:layout_constraintHorizontal_bias="0.044"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -59,11 +57,13 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/title_farmacies"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/Farmacias"
+        android:textAllCaps="true"
         android:textColor="@android:color/black"
-        android:textSize="36sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/recipeListCard"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +88,7 @@
         android:layout_height="404dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="32dp"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="@color/fondo"
         app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,18 +98,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp" >
+            android:padding="16dp">
 
             <ImageButton
                 android:id="@+id/previewGoogleMaps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/open_google_maps"
                 android:src="@drawable/previewgooglemaps"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/open_google_maps"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -133,7 +133,7 @@
         android:id="@+id/imageView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/cruz_farmacia"
         app:layout_constraintBottom_toTopOf="@+id/titleTextView"
         app:layout_constraintEnd_toEndOf="parent"
