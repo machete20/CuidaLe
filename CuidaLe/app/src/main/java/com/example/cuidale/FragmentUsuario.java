@@ -32,7 +32,7 @@ public class FragmentUsuario extends Fragment {
             navController.popBackStack();
         });
 
-        menu = v.findViewById(R.id.menuButtonUsuario);
+        menu = v.findViewById(R.id.menuDesplegableUsuario);
 
         menu.setOnClickListener(v->{
             NavController navController = Navigation.findNavController(v);

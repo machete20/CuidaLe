@@ -90,5 +90,9 @@
     <string name="saved_login">Inicio de sesión guardado</string>
     <string name="where_logged_in">Donde has iniciado sesión</string>
 
+    <!-- STRINGS AGREGAR PACIENTE-->
+    <string name="addPaciente">Añadir paciente</string>
+    <string name="nombrePaciente">Nombre del paciente</string>
+    <string name="localizcionPaciente">Localización</string>
 
 </resources>

@@ -1,207 +1,267 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout9"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/white">
 
     <!-- Top Bar -->
     <androidx.cardview.widget.CardView
         android:id="@+id/BarraArribaPrincp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="16dp"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:background="#B3E5FC">
 
             <ImageView
                 android:id="@+id/menuDesplegableUsuario"
-                android:layout_width="40sp"
-                android:layout_height="40sp"
-                android:layout_margin="4dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
                 android:src="@drawable/barras"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <!-- Profile Container -->
-    <LinearLayout
-        android:layout_width="match_parent"
+
+
+    <!-- Profile Image -->
+    <FrameLayout
+        android:id="@+id/frameLayout6"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="38dp"
+        android:background="#2196F3"
+        android:padding="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/correoUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BarraArribaPrincp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_corner_white"
+            android:scaleType="centerCrop"
+            android:src="@drawable/defaultprofile" />
+    </FrameLayout>
+
+    <!-- User Details -->
+    <TextView
+        android:id="@+id/nombreUsuario"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:padding="16dp"
-        tools:ignore="ExtraText">
+        android:layout_marginTop="9dp"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout6" />
 
-        <!-- Profile Image -->
-        <FrameLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="#2196F3"
-            android:padding="4dp"
-            android:layout_marginBottom="8dp">
+    <TextView
+        android:id="@+id/correoUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/dniUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout6" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/defaultprofile"
-                android:scaleType="centerCrop"
-                android:background="@drawable/rounded_corner_white"/>
-        </FrameLayout>
-A
-        <!-- User Details -->
-        <TextView
-            android:id="@+id/nombreUsuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/dniUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/cambiar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/correoUsuario" />
 
-        <TextView
-            android:id="@+id/correoUsuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
+    <!-- Change Button -->
+    <Button
+        android:id="@+id/cambiar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="151dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="150dp"
+        android:backgroundTint="#B3E5FC"
+        android:text="@string/btn_change"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout6" />
 
-        <TextView
-            android:id="@+id/dniUsuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
-
-        <!-- Change Button -->
-        <Button
-            android:id="@+id/cambiar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_change"
-            android:textSize="16sp"
-            android:backgroundTint="#B3E5FC"
-            android:textColor="@android:color/black"/>
-    </LinearLayout>
 
     <!-- Contacts List -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:orientation="vertical">
 
-        <!-- First Contact -->
-        <LinearLayout
-            android:id="@+id/UsuarioCuenta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/rounded_light_blue"
-            android:padding="8dp">
 
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/rounded_corner_white"
-                android:scaleType="centerCrop"
-                android:src="@drawable/defaultprofile" />
+    <!-- First Contact -->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="413dp"
+        android:layout_height="232dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogoutC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cambiar">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/contact_1_name"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/contact_1_location"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Second Contact -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_light_blue"
-            android:padding="8dp">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/defaultprofile"
-                android:layout_marginEnd="16dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/rounded_corner_white"/>
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/linearLayout10"
+                android:layout_width="379dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_light_blue"
+                android:padding="8dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/contact_2_name"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_corner_white"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/defaultprofile" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/contact_2_location"
-                    android:textSize="16sp"/>
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_2_name"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_2_location"
+                        android:textSize="16sp" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/UsuarioCuenta"
+                android:layout_width="380dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_light_blue"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_corner_white"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/defaultprofile" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_1_name"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_1_location"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btn_añadirPaciente"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_light_blue"
+                android:contentDescription="Añadir paciente"
+                android:src="@drawable/adduser" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Second Contact -->
+
 
     <!-- Espacio para empujar el botón hacia abajo -->
     <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:id="@+id/space2"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <Button
         android:id="@+id/btnLogoutC"
-        android:layout_width="match_parent"
+        android:layout_width="291dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="60dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#B3E5FC"
         android:padding="12dp"
         android:text="CERRAR SESION"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn_retroceso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
 
     <ImageButton
         android:id="@+id/btn_retroceso"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="16dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/rounded_light_blue"
         android:padding="8dp"
         android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

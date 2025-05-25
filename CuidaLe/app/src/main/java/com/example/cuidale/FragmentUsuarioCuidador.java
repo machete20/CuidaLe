@@ -31,7 +31,7 @@ public class FragmentUsuarioCuidador extends Fragment {
 
     private View v;
 
-    private ImageButton atras;
+    private ImageButton atras, btnAñadir;
     private ImageView menu;
     private LinearLayout usuario;
     private TextView nomUsu;
@@ -48,13 +48,18 @@ public class FragmentUsuarioCuidador extends Fragment {
         nomUsu = v.findViewById(R.id.nombreUsuario);
         correoUsu = v.findViewById(R.id.correoUsuario);
         dniUsu = v.findViewById(R.id.dniUsuario);
+        btnAñadir = v.findViewById(R.id.btn_añadirPaciente);
 
         menu = v.findViewById(R.id.menuDesplegableUsuario);
-
 
         menu.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentMenuDesplegable);
+        });
+
+        btnAñadir.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.action_fragmentUsuarioCuidador_to_agregarPaciente);
         });
 
         datos=v.findViewById(R.id.cambiar);
