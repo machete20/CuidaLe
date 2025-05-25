@@ -43,7 +43,7 @@ public class FragmentPastillero extends Fragment {
 
         atras = v.findViewById(R.id.backButtonPastillero);
         menu = v.findViewById(R.id.menuPastillero);
-        cuenta = v.findViewById(R.id.cuentaFarmacias);
+        cuenta = v.findViewById(R.id.cuentaPastillero);
         add = v.findViewById(R.id.addButtonPastillero3);
         delete = v.findViewById(R.id.deleteButtonPastillero);
         recyclerView = v.findViewById(R.id.medicationRecyclerView);
