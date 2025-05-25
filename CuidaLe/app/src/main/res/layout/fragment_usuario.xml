@@ -23,7 +23,7 @@
             android:background="#B3E5FC">
 
             <ImageView
-                android:id="@+id/menuButtonUsuario"
+                android:id="@+id/menuDesplegableUsuario"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="8dp"
