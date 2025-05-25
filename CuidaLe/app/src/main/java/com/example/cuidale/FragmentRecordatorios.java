@@ -35,6 +35,10 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -73,7 +77,7 @@ public class FragmentRecordatorios extends Fragment {
             navController.navigate(R.id.fragmentPantPrinc);
         });
 
-        cargarRecordatoriosDesdePreferences();
+        cargarRecordatoriosDesdeFirebase();
 
         // Verifica si el permiso para notificaciones está concedido
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
@@ -132,7 +136,7 @@ public class FragmentRecordatorios extends Fragment {
 
                         Recordatorio nuevoRecordatorio = new Recordatorio(nombre, horaFormateada);
                         listaRecordatorios.add(nuevoRecordatorio);
-                        guardarRecordatorioEnPreferences(nuevoRecordatorio);
+                        guardarRecordatorioEnFirebase(nuevoRecordatorio);
                         Collections.sort(listaRecordatorios, (r1, r2) -> r1.getHora().compareTo(r2.getHora()));
                         actualizarListaRecordatorios(inflater);
                     })
@@ -148,33 +152,8 @@ public class FragmentRecordatorios extends Fragment {
         timePicker.show(getParentFragmentManager(), "time_picker");
     }
 
-
-    private void guardarRecordatorioEnPreferences(Recordatorio recordatorio) {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("recordatorios_pref", getContext().MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        Set<String> recordatoriosSet = new HashSet<>(sharedPreferences.getStringSet("recordatorios", new HashSet<>()));
-        String nuevoRecordatorio = recordatorio.getNombre() + "|||" + recordatorio.getHora();
-        recordatoriosSet.add(nuevoRecordatorio);
-
-        editor.putStringSet("recordatorios", recordatoriosSet);
-        editor.apply();
-    }
-
-    private void eliminarRecordatorioDePreferences(Recordatorio recordatorio) {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("recordatorios_pref", getContext().MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        Set<String> recordatoriosSet = new HashSet<>(sharedPreferences.getStringSet("recordatorios", new HashSet<>()));
-        String clave = recordatorio.getNombre() + "|||" + recordatorio.getHora();
-
-        if (recordatoriosSet.contains(clave)) {
-            recordatoriosSet.remove(clave);
-            editor.remove("recordatorios");
-            editor.apply();  // aplicar eliminación
-            editor.putStringSet("recordatorios", recordatoriosSet);
-            editor.apply();  // aplicar nuevo set
-        }
+    private void guardarRecordatorioEnFirebase(Recordatorio recordatorio) {
+        FirebaseDataManager.getInstance().guardarRecordatorio(recordatorio);
     }
 
     private void actualizarListaRecordatorios(LayoutInflater inflater) {
@@ -222,43 +201,37 @@ public class FragmentRecordatorios extends Fragment {
 
     private void eliminarRecordatorio(Recordatorio recordatorio) {
         listaRecordatorios.remove(recordatorio);
-        eliminarRecordatorioDePreferences(recordatorio);
-        actualizarListaRecordatorios(LayoutInflater.from(getContext()));
-        Toast.makeText(getContext(), "Recordatorio eliminado", Toast.LENGTH_SHORT).show();
-    }
 
-    private void cargarRecordatoriosDesdePreferences() {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("recordatorios_pref", getContext().MODE_PRIVATE);
-        Set<String> recordatoriosSet = sharedPreferences.getStringSet("recordatorios", new HashSet<>());
-        listaRecordatorios.clear();
-
-        for (String recordatorioString : recordatoriosSet) {
-            String[] partes = recordatorioString.split("\\|\\|\\|");
-            if (partes.length == 2) {
-                listaRecordatorios.add(new Recordatorio(partes[0], partes[1]));
+        FirebaseDataManager.getInstance().eliminarRecordatorio(recordatorio.getId(), new FirebaseDataManager.OnRecordatorioEliminadoListener() {
+            @Override
+            public void onEliminado() {
+                Toast.makeText(getContext(), "Recordatorio eliminado", Toast.LENGTH_SHORT).show();
+                cargarRecordatoriosDesdeFirebase(); // Recarga la lista desde Firebase
             }
-        }
 
-        Collections.sort(listaRecordatorios, (r1, r2) -> r1.getHora().compareTo(r2.getHora()));
-        actualizarListaRecordatorios(LayoutInflater.from(getContext()));
-    }
-
-    private void programarAlarma(Recordatorio recordatorio) {
-        // Verificar si es necesario solicitar el permiso de alarmas exactas
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (!isExactAlarmPermissionGranted()) {
-                // Si el permiso no está concedido, solicita el permiso
-                requestExactAlarmPermission();
-            } else {
-                // Si el permiso ya está concedido, programar la alarma
-                realizarProgramacionAlarma(recordatorio);
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
             }
-        } else {
-            // Para versiones anteriores a Android 12, se puede programar la alarma directamente
-            realizarProgramacionAlarma(recordatorio);
-        }
+        });
     }
 
+    private void cargarRecordatoriosDesdeFirebase() {
+        FirebaseDataManager.getInstance().cargarRecordatorios(new FirebaseDataManager.OnRecordatoriosCargadosListener() {
+            @Override
+            public void onCargados(List<Recordatorio> recordatorios) {
+                listaRecordatorios.clear();
+                listaRecordatorios.addAll(recordatorios);
+                Collections.sort(listaRecordatorios, (r1, r2) -> r1.getHora().compareTo(r2.getHora()));
+                actualizarListaRecordatorios(LayoutInflater.from(getContext()));
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     // Método para realizar la programación de la alarma
     @SuppressLint({"ScheduleExactAlarm", "MissingPermission"})
@@ -300,7 +273,6 @@ public class FragmentRecordatorios extends Fragment {
         Toast.makeText(getContext(), "Alarma programada para " + recordatorio.getHora(), Toast.LENGTH_SHORT).show();
     }
 
-
     private void cancelarAlarma(Recordatorio recordatorio) {
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
@@ -312,48 +284,6 @@ public class FragmentRecordatorios extends Fragment {
 
         android.app.AlarmManager alarmManager = (android.app.AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
-    }
-
-    private void crearNotificacion(Recordatorio recordatorio) {
-        // Verificar si tenemos el permiso para emitir notificaciones en Android 13+
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            if (requireActivity().checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), "Permiso para notificaciones no concedido", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "canal_recordatorios")
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Recordatorio: " + recordatorio.getNombre())
-                .setContentText("Es hora de tu recordatorio: " + recordatorio.getNombre())
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
-                .setWhen(System.currentTimeMillis() + getDelayInMillis(recordatorio.getHora()));  // Establece el tiempo de la alarma
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-        notificationManager.notify(recordatorio.getNombre().hashCode(), builder.build());
-    }
-
-    private long getDelayInMillis(String hora) {
-        String[] partes = hora.split(":");
-        int horaInt = Integer.parseInt(partes[0]);
-        int minutoInt = Integer.parseInt(partes[1]);
-
-        java.util.Calendar calendar = java.util.Calendar.getInstance();
-        calendar.set(java.util.Calendar.HOUR_OF_DAY, horaInt);
-        calendar.set(java.util.Calendar.MINUTE, minutoInt);
-        calendar.set(java.util.Calendar.SECOND, 0);
-
-        if (calendar.before(java.util.Calendar.getInstance())) {
-            calendar.add(java.util.Calendar.DAY_OF_MONTH, 1); // Si la hora ya pasó, añade un día
-        }
-
-        return calendar.getTimeInMillis() - System.currentTimeMillis();  // Devuelve el delay
     }
 
     private boolean isExactAlarmPermissionGranted() {
@@ -389,13 +319,6 @@ public class FragmentRecordatorios extends Fragment {
         }
     }
 
-    private void guardarEstadoSwitch(boolean estado) {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("estado_switch", estado);  // Guardamos el estado del switch
-        editor.apply();
-    }
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -418,4 +341,18 @@ public class FragmentRecordatorios extends Fragment {
                 }
             });
 
+    private void programarAlarma(Recordatorio recordatorio) {
+        // Verificar si es necesario solicitar el permiso de alarmas exactas
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!isExactAlarmPermissionGranted()) {
+                // Si el permiso no está concedido, solicita el permiso
+                requestExactAlarmPermission();
+            } else {
+                // Si el permiso ya está concedido, programar la alarma
+                realizarProgramacionAlarma(recordatorio);
+            }
+        } else {
+            realizarProgramacionAlarma(recordatorio);
+        }
+    }
 }
