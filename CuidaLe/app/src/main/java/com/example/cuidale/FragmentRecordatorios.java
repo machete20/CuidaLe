@@ -200,7 +200,13 @@ public class FragmentRecordatorios extends Fragment {
     }
 
     private void eliminarRecordatorio(Recordatorio recordatorio) {
+
+        cancelarAlarma(recordatorio);
+
         listaRecordatorios.remove(recordatorio);
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        sharedPreferences.edit().remove("estado_switch_" + recordatorio.getNombre()).apply();
 
         FirebaseDataManager.getInstance().eliminarRecordatorio(recordatorio.getId(), new FirebaseDataManager.OnRecordatorioEliminadoListener() {
             @Override
@@ -215,6 +221,7 @@ public class FragmentRecordatorios extends Fragment {
             }
         });
     }
+
 
     private void cargarRecordatoriosDesdeFirebase() {
         FirebaseDataManager.getInstance().cargarRecordatorios(new FirebaseDataManager.OnRecordatoriosCargadosListener() {

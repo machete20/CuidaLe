@@ -22,6 +22,11 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -50,7 +55,7 @@ public class FragmentCalendario extends Fragment {
 
         menu = rootView.findViewById(R.id.menuPastillero);
 
-        menu.setOnClickListener(v->{
+        menu.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentMenuDesplegable);
         });
@@ -70,9 +75,7 @@ public class FragmentCalendario extends Fragment {
                             }
                         }
 
-                        if (allGranted) {
-
-                        } else {
+                        if (!allGranted) {
                             Toast.makeText(getContext(), "Permisos denegados", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -102,8 +105,21 @@ public class FragmentCalendario extends Fragment {
         ImageButton addEventButton = rootView.findViewById(R.id.addButtonCalendario);
         addEventButton.setOnClickListener(v -> showEventDialog(selectedDate)); // Mostrar el diálogo de evento cuando se presiona el botón
 
+        // Establecer la fecha actual como seleccionada por defecto (ajustando a 00:00 hora local)
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        today.set(Calendar.MILLISECOND, 0);
+
+        selectedDate = today.getTimeInMillis();
+        calendarView.setDate(selectedDate, false, true);
+        loadEventsForSelectedDate();
+
         return rootView;
     }
+
+
 
     // Convierte la fecha en un timestamp en milisegundos
     private long getDateInMillis(int year, int month, int dayOfMonth) {
@@ -111,111 +127,38 @@ public class FragmentCalendario extends Fragment {
     }
 
     // Guarda un evento en SharedPreferences
-    private void saveEventToPreferences(long date, String eventDetails) {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EventosCalendario", getActivity().MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        // Recuperar los eventos existentes para esa fecha
-        String existingEvents = sharedPreferences.getString(String.valueOf(date), "");
-
-        // Añadir el nuevo evento a los eventos existentes
-        String updatedEvents = existingEvents + eventDetails + ";;";
-
-        // Guardar la cadena de eventos para esa fecha
-        editor.putString(String.valueOf(date), updatedEvents);
-        editor.apply();  // Aplica los cambios
-    }
-
-    // Elimina un evento de SharedPreferences y de la vista
-    private void deleteEventFromPreferences(long date, String eventDetailsToDelete) {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EventosCalendario", getActivity().MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        // Recuperar los eventos existentes para esa fecha
-        String existingEvents = sharedPreferences.getString(String.valueOf(date), "");
-
-        // Eliminar el evento específico de la lista
-        String updatedEvents = existingEvents.replace(eventDetailsToDelete + ";;", "");
-
-        // Guardar la lista de eventos actualizada
-        editor.putString(String.valueOf(date), updatedEvents);
-        editor.apply();  // Aplica los cambios
+    private void saveEventToFirebase(long date, String eventDetails) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDataManager.guardarEvento(userId, date, eventDetails);
     }
 
     // Carga los eventos desde SharedPreferences para la fecha seleccionada
     private void loadEventsForSelectedDate() {
-        if (selectedDate == 0) {
-            return;
-        }
+        if (selectedDate == 0) return;
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EventosCalendario", getActivity().MODE_PRIVATE);
-        String eventString = sharedPreferences.getString(String.valueOf(selectedDate), "");
-
-        // Limpiar los TextViews actuales para evitar duplicados
         containerLayout.removeAllViews();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        // Convertir la cadena de eventos en una lista
-        String[] eventArray = eventString.split(";;");
+        FirebaseDataManager.obtenerEventos(userId, selectedDate, new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
+                    String event = eventSnapshot.getValue(String.class);
+                    String eventId = eventSnapshot.getKey();
 
-        // Crear un TextView para cada evento y agregarlo al LinearLayout
-        for (String event : eventArray) {
-            if (!event.isEmpty()) {
-                // Crear el contenedor para el evento (LinearLayout horizontal)
-                LinearLayout eventLayout = new LinearLayout(getContext());
-                eventLayout.setOrientation(LinearLayout.HORIZONTAL);
-                eventLayout.setPadding(0, 16, 0, 16);
-                eventLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                ));
-
-                // Crear el TextView con el evento
-                TextView eventTextView = new TextView(getContext());
-                eventTextView.setText(event);
-                eventTextView.setTextSize(16);
-                // Establecer márgenes de 20px con el borde de la pantalla
-                LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
-                        0,
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        1f // Esto hace que el TextView ocupe todo el espacio disponible
-                );
-                int marginInPx = 20; // Márgenes de 20px
-                textParams.setMargins(marginInPx, marginInPx, 0, marginInPx); // Establecer márgenes a la izquierda y derecha
-                eventTextView.setLayoutParams(textParams);
-
-                // Crear el botón de eliminar
-                ImageButton deleteButton = new ImageButton(getContext());
-                deleteButton.setImageResource(android.R.drawable.ic_menu_delete);
-                deleteButton.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                deleteButton.setLayoutParams(buttonParams);
-
-                // Eliminar evento al hacer clic en el botón
-                deleteButton.setOnClickListener(v -> {
-                    // Eliminar de SharedPreferences
-                    deleteEventFromPreferences(selectedDate, event);
-
-                    // También eliminar de Google Calendar
-                    deleteEventFromGoogleCalendar(event, selectedDate);
-
-                    // Eliminar evento de la vista
-                    containerLayout.removeView(eventLayout);
-
-                    Toast.makeText(getActivity(), "Evento eliminado", Toast.LENGTH_SHORT).show();
-                });
-
-                // Agregar el TextView y el botón de eliminar al layout horizontal
-                eventLayout.addView(eventTextView);
-                eventLayout.addView(deleteButton);
-
-                // Agregar el layout con el evento a la vista
-                containerLayout.addView(eventLayout);
+                    if (event != null && !event.isEmpty()) {
+                        agregarEventoAUI(event, eventId);
+                    }
+                }
             }
-        }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Error al cargar eventos", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
     // Muestra un cuadro de diálogo para ingresar los detalles del evento
     private void showEventDialog(long selectedDate) {
@@ -243,7 +186,7 @@ public class FragmentCalendario extends Fragment {
                 String eventDetails = "Evento: " + title + "\nDescripción: " + description;
 
                 // Guardar en SharedPreferences
-                saveEventToPreferences(selectedDate, eventDetails);
+                saveEventToFirebase(selectedDate, eventDetails);
 
                 // Mostrar en el layout como antes
                 loadEventsForSelectedDate(); // Refrescamos la vista de eventos
@@ -337,6 +280,39 @@ public class FragmentCalendario extends Fragment {
         }
     }
 
+    private void agregarEventoAUI(String event, String eventId) {
+        LinearLayout eventLayout = new LinearLayout(getContext());
+        eventLayout.setOrientation(LinearLayout.HORIZONTAL);
+        eventLayout.setPadding(0, 16, 0, 16);
+        eventLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+
+        TextView eventTextView = new TextView(getContext());
+        eventTextView.setText(event);
+        eventTextView.setTextSize(16);
+        LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+        textParams.setMargins(20, 20, 0, 20);
+        eventTextView.setLayoutParams(textParams);
+
+        ImageButton deleteButton = new ImageButton(getContext());
+        deleteButton.setImageResource(android.R.drawable.ic_menu_delete);
+        deleteButton.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        deleteButton.setOnClickListener(v -> {
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            FirebaseDataManager.eliminarEvento(userId, selectedDate, eventId);
+            containerLayout.removeView(eventLayout);
+            deleteEventFromGoogleCalendar(event, selectedDate);
+        });
+
+        eventLayout.addView(eventTextView);
+        eventLayout.addView(deleteButton);
+        containerLayout.addView(eventLayout);
+    }
+
+
     private void checkAndRequestCalendarPermissions() {
         // Verificar si tenemos los permisos de calendario
         String[] permissions = {
@@ -350,6 +326,12 @@ public class FragmentCalendario extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        loadEventsForSelectedDate();  // Cargar eventos desde SharedPreferences para la fecha seleccionada
+
+        if (selectedDate == 0) {
+            Calendar today = Calendar.getInstance();
+            selectedDate = today.getTimeInMillis();
+            calendarView.setDate(selectedDate, false, true);
+        }
+
     }
 }
