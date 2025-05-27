@@ -14,16 +14,17 @@ import java.util.List;
 
 public class FirebaseDataManager {
     private static FirebaseDataManager instancia;
-    private DatabaseReference databaseReference;
+    private static final DatabaseReference usuariosRef = FirebaseDatabase
+            .getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
+            .getReference("usuarios");
+
 
     // Constructor privado (Singleton)
     private FirebaseDataManager() {
         String databaseUrl = "https://cuidale-default-rtdb.europe-west1.firebasedatabase.app";
         FirebaseDatabase database = FirebaseDatabase.getInstance(databaseUrl);
-        databaseReference = database.getReference("usuarios");
     }
 
-    // Método para obtener la única instancia de la clase
     public static synchronized FirebaseDataManager getInstance() {
         if (instancia == null) {
             instancia = new FirebaseDataManager();
@@ -31,90 +32,68 @@ public class FirebaseDataManager {
         return instancia;
     }
 
-    // Método para verificar si el DNI existe y proceder con la inserción
+    // === USUARIOS ===
+
     public void verificarYRegistrarUsuario(String dni, String nombre, String correo, OnDniCheckListener listener) {
-        // Verificar si el DNI ya existe
-        databaseReference.child(dni).addListenerForSingleValueEvent(new ValueEventListener() {
+        usuariosRef.child(dni).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Si ya existe un usuario con el mismo DNI
-                if (dataSnapshot.exists()) {
-                    listener.onDniExist();  // Callback para indicar que el DNI ya existe
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    listener.onDniExist();
                 } else {
-                    // El DNI no existe, proceder con la inserción
-                    listener.onDniDoesNotExist();  // Callback cuando el DNI no existe y se debe registrar el usuario
+                    listener.onDniDoesNotExist();
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // En caso de error al consultar la base de datos
-                Log.e("FirebaseDataManager", "❌ Error al verificar el DNI: " + databaseError.getMessage());
+            public void onCancelled(DatabaseError error) {
+                Log.e("FirebaseDataManager", "❌ Error al verificar el DNI: " + error.getMessage());
             }
         });
     }
 
-    // Método para insertar los datos del usuario en Firebase Database
     public void insertarUsuario(String id, Usuario usuario, OnUserInsertedListener listener) {
-        // Intentar insertar el usuario en la base de datos
-        databaseReference.child(id).setValue(usuario)
-                .addOnSuccessListener(aVoid -> {
-                    // Si la inserción es exitosa
-                    listener.onSuccess();
-                })
-                .addOnFailureListener(e -> {
-                    // Si la inserción falla
-                    listener.onFailure(e.getMessage());
-                });
+        usuariosRef.child(id).setValue(usuario)
+                .addOnSuccessListener(aVoid -> listener.onSuccess())
+                .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
     }
 
-    // Interfaz para manejar el callback cuando el DNI ya existe
     public interface OnDniCheckListener {
         void onDniExist();
-        void onDniDoesNotExist();  // Callback cuando el DNI no existe y se ha registrado al usuario
+        void onDniDoesNotExist();
     }
 
-    // Interfaz para manejar el resultado de la inserción del usuario
     public interface OnUserInsertedListener {
-        void onSuccess();  // Cuando la inserción es exitosa
-        void onFailure(String errorMessage);  // Cuando hay un error al insertar los datos
+        void onSuccess();
+        void onFailure(String errorMessage);
     }
+
+    // === RECORDATORIOS ===
 
     public void guardarRecordatorio(Recordatorio recordatorio) {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference recordatoriosRef = databaseReference.child(uid).child("recordatorios");
-
-        String key = recordatoriosRef.push().getKey();
-        recordatorio.setId(key);  // Asignamos el id generado por Firebase
-
+        DatabaseReference ref = usuariosRef.child(uid).child("recordatorios");
+        String key = ref.push().getKey();
         if (key != null) {
-            recordatoriosRef.child(key).setValue(recordatorio)
-                    .addOnSuccessListener(aVoid -> Log.d("FirebaseDataManager", "✅ Recordatorio guardado con ID"))
-                    .addOnFailureListener(e -> Log.e("FirebaseDataManager", "❌ Error al guardar recordatorio: " + e.getMessage()));
+            recordatorio.setId(key);
+            ref.child(key).setValue(recordatorio)
+                    .addOnSuccessListener(aVoid -> Log.d("FirebaseDataManager", "✅ Recordatorio guardado"))
+                    .addOnFailureListener(e -> Log.e("FirebaseDataManager", "❌ Error: " + e.getMessage()));
         } else {
-            Log.e("FirebaseDataManager", "❌ No se pudo generar la clave para el recordatorio");
+            Log.e("FirebaseDataManager", "❌ Error generando clave para recordatorio");
         }
-    }
-
-    public interface OnRecordatoriosCargadosListener {
-        void onCargados(List<Recordatorio> recordatorios);
-        void onError(String error);
     }
 
     public void cargarRecordatorios(OnRecordatoriosCargadosListener listener) {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference recordatoriosRef = databaseReference.child(uid).child("recordatorios");
-
-        recordatoriosRef.get().addOnCompleteListener(task -> {
+        usuariosRef.child(uid).child("recordatorios").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 List<Recordatorio> lista = new ArrayList<>();
-                DataSnapshot snapshot = task.getResult();
-
-                for (DataSnapshot recordatorioSnap : snapshot.getChildren()) {
-                    Recordatorio recordatorio = recordatorioSnap.getValue(Recordatorio.class);
-                    if (recordatorio != null) {
-                        recordatorio.setId(recordatorioSnap.getKey());  // Asignar ID Firebase
-                        lista.add(recordatorio);
+                for (DataSnapshot snap : task.getResult().getChildren()) {
+                    Recordatorio r = snap.getValue(Recordatorio.class);
+                    if (r != null) {
+                        r.setId(snap.getKey());
+                        lista.add(r);
                     }
                 }
                 listener.onCargados(lista);
@@ -124,32 +103,46 @@ public class FirebaseDataManager {
         });
     }
 
-
     public void eliminarRecordatorio(String idRecordatorio, OnRecordatorioEliminadoListener listener) {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        DatabaseReference recordatorioRef = databaseReference.child(uid).child("recordatorios").child(idRecordatorio);
-
-        recordatorioRef.removeValue()
+        usuariosRef.child(uid).child("recordatorios").child(idRecordatorio).removeValue()
                 .addOnSuccessListener(aVoid -> listener.onEliminado())
                 .addOnFailureListener(e -> listener.onError(e.getMessage()));
     }
 
+    public interface OnRecordatoriosCargadosListener {
+        void onCargados(List<Recordatorio> recordatorios);
+        void onError(String error);
+    }
 
     public interface OnRecordatorioEliminadoListener {
         void onEliminado();
         void onError(String error);
     }
 
-    // Clase interna para estructurar los datos
+    // === EVENTOS DE CALENDARIO ===
+
+    public static void guardarEvento(String userId, long fecha, String evento) {
+        usuariosRef.child(userId).child(String.valueOf(fecha)).push().setValue(evento);
+    }
+
+    public static void eliminarEvento(String userId, long fecha, String eventoId) {
+        usuariosRef.child(userId).child(String.valueOf(fecha)).child(eventoId).removeValue();
+    }
+
+    public static void obtenerEventos(String userId, long fecha, ValueEventListener listener) {
+        usuariosRef.child(userId).child(String.valueOf(fecha)).addListenerForSingleValueEvent(listener);
+    }
+
+
+    // === MODELO DE USUARIO ===
+
     public static class Usuario {
         public String nombre;
         public String correo;
         public String dni;
 
-        public Usuario() {
-            // Constructor vacío necesario para Firebase
-        }
+        public Usuario() {} // Requerido por Firebase
 
         public Usuario(String nombre, String correo, String dni) {
             this.nombre = nombre;
