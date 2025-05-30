@@ -58,6 +58,8 @@ public class FirebaseDataManager {
                 .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
     }
 
+
+
     public interface OnDniCheckListener {
         void onDniExist();
         void onDniDoesNotExist();
@@ -151,7 +153,21 @@ public class FirebaseDataManager {
         }
     }
 
-    public DatabaseReference getDatabaseReference() {
-        return databaseReference;
+
+
+    // === PACIENTES ===
+
+    public void guardarPaciente(Paciente pacientes) {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = usuariosRef.child(uid).child("pacientes");
+        String key = ref.push().getKey();
+        if (key != null) {
+            pacientes.setId(key);
+            ref.child(key).setValue(pacientes)
+                    .addOnSuccessListener(aVoid -> Log.d("FirebaseDataManager", "✅ Paciente guardado"))
+                    .addOnFailureListener(e -> Log.e("FirebaseDataManager", "❌ Error: " + e.getMessage()));
+        } else {
+            Log.e("FirebaseDataManager", "❌ Error generando clave para paciente");
+        }
     }
 }

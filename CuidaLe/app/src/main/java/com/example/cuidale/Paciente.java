@@ -1,16 +1,16 @@
 package com.example.cuidale;
 
-public class Pacientes{
+public class Paciente {
 
     private String id;
     private String nombre;
     private String localizacion;
 
     // Constructor vacío requerido por Firebase
-    public Pacientes() {
+    public Paciente() {
     }
 
-    public Pacientes(String id, String nombre, String localizacion) {
+    public Paciente(String id, String nombre, String localizacion) {
         this.id = id;
         this.nombre = nombre;
         this.localizacion = localizacion;

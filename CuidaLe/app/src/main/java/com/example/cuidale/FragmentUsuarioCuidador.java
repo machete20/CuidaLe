@@ -59,7 +59,7 @@ public class FragmentUsuarioCuidador extends Fragment {
 
         btnAñadir.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_fragmentUsuarioCuidador_to_agregarPaciente);
+            navController.navigate(R.id.action_fragmentUsuarioCuidador_to_agregarPacienteFragment);
         });
 
         datos=v.findViewById(R.id.cambiar);

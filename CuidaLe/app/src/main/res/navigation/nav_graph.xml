@@ -90,8 +90,8 @@
         android:name="com.example.cuidale.FragmentUsuarioCuidador"
         android:label="FragmentUsuarioCuidador" >
         <action
-            android:id="@+id/action_fragmentUsuarioCuidador_to_agregarPaciente"
-            app:destination="@id/agregarPaciente" />
+            android:id="@+id/action_fragmentUsuarioCuidador_to_agregarPacienteFragment"
+            app:destination="@id/agregarPacienteFragment" />
     </fragment>
 
     <fragment
@@ -143,8 +143,8 @@
         android:label="fragment_contrasena"
         tools:layout="@layout/fragment_contrasena" />
     <fragment
-        android:id="@+id/agregarPaciente"
-        android:name="com.example.cuidale.agregarPaciente"
-        android:label="agregarPaciente" />
+        android:id="@+id/agregarPacienteFragment"
+        android:name="com.example.cuidale.AgregarPacienteFragment"
+        android:label="AgregarPacienteFragment" />
 
 </navigation>
