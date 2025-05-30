@@ -33,22 +33,27 @@ public class FragmentUsuarioCuidador extends Fragment {
 
     private ImageButton atras, btnAñadir;
     private ImageView menu;
-    private LinearLayout usuario;
     private TextView nomUsu;
     private TextView correoUsu;
     private TextView dniUsu;
     private Button cerrarSesion;
     private Button datos;
+    private LinearLayout contenedorPacientes;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.fragment_usuariocuidador, container, false);
 
+        contenedorPacientes = v.findViewById(R.id.containerPacientes);
+        cargarPacientes();
+
         nomUsu = v.findViewById(R.id.nombreUsuario);
         correoUsu = v.findViewById(R.id.correoUsuario);
         dniUsu = v.findViewById(R.id.dniUsuario);
-        btnAñadir = v.findViewById(R.id.btn_añadirPaciente);
+        btnAñadir = v.findViewById(R.id.añadirPaciente);
 
         menu = v.findViewById(R.id.menuDesplegableUsuario);
 
@@ -67,12 +72,6 @@ public class FragmentUsuarioCuidador extends Fragment {
         datos.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentDatosPersonales);
-        });
-        usuario = v.findViewById(R.id.UsuarioCuenta);
-
-        usuario.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.fragmentUsuario);
         });
 
         atras = v.findViewById(R.id.btn_retroceso);
@@ -156,4 +155,48 @@ public class FragmentUsuarioCuidador extends Fragment {
         }
     }
 
+    private void cargarPacientes() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) return;
+
+        String uid = user.getUid();
+        DatabaseReference ref = FirebaseDatabase
+                .getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference("usuarios").child(uid).child("pacientes");
+
+        ref.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                contenedorPacientes.removeAllViews(); // Limpia antes de añadir
+
+                for (DataSnapshot snapshot : task.getResult().getChildren()) {
+                    Paciente paciente = snapshot.getValue(Paciente.class);
+                    if (paciente != null) {
+                        View card = crearVistaPaciente(paciente);
+                        contenedorPacientes.addView(card, 0); // Añadir arriba
+                    }
+                }
+            }
+        });
+    }
+
+    private View crearVistaPaciente(Paciente paciente) {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+
+        // Inflamos un layout XML individual para cada paciente (ver paso 3)
+        View vista = inflater.inflate(R.layout.item_paciente, contenedorPacientes, false);
+
+        TextView nombre = vista.findViewById(R.id.txtNombrePaciente);
+        TextView localizacion = vista.findViewById(R.id.txtLocalizacionPaciente);
+        ImageView imagen = vista.findViewById(R.id.imgPaciente);
+
+        nombre.setText(paciente.getNombre());
+        localizacion.setText(paciente.getLocalizacion());
+
+        // Puedes poner imagen por defecto o de Firebase Storage si quieres
+        imagen.setImageResource(R.drawable.defaultprofile);
+
+        return vista;
+    }
 }
+
+
