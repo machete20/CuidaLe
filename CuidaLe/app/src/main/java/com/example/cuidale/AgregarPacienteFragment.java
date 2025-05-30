@@ -6,14 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 public class AgregarPacienteFragment extends Fragment {
 
     private EditText edtNombre, edtLocalizacion;
     private Button btnGuardar;
+    private ImageButton atras;
 
     private View view;
 
@@ -27,6 +32,14 @@ public class AgregarPacienteFragment extends Fragment {
         btnGuardar = view.findViewById(R.id.btnGuardarPaciente);
 
         btnGuardar.setOnClickListener(v -> guardarPaciente());
+
+        atras = view.findViewById(R.id.btnVolver);
+
+        atras.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.popBackStack();
+        });
+
 
         return view;
     }
