@@ -10,7 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.ViewHolder> {
     private List<Medication> lista;
@@ -61,14 +64,21 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Vi
         holder.nombreTextView.setText(medicamento.getNombre());
         holder.checkBox.setChecked(medicamento.isTomada());
 
+        // Al cambiar el estado de la toma, también registramos la hora actual si está tomado
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             medicamento.setTomada(isChecked);
+            if (isChecked) {
+                String horaActual = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+                medicamento.setHoraTomada(horaActual);
+            } else {
+                medicamento.setHoraTomada(null);
+            }
             if (listener != null) {
                 listener.onMedicationChanged();
             }
         });
 
-        // Manejamos la selección manual al hacer clic
+        // Manejamos la selección manual al hacer clic en el ítem
         holder.itemView.setOnClickListener(v -> {
             medicamento.setSeleccionado(!medicamento.isSeleccionado());
             notifyItemChanged(position);
