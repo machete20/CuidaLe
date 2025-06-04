@@ -3,6 +3,7 @@
     <string name="app_name">CuidaLe</string>
     <string name="botonInicioSesion">Iniciar sesion</string>
     <string name="botonRegistro">Registrarme</string>
+    <string name="botonRegistro2">Crear una cuenta</string>
     <string name="Usuario">Usuario o Correo Electronico</string>
     <string name="Password">Introduce tu contraseña</string>
     <string name="Nombre">Nombre Completo</string>
