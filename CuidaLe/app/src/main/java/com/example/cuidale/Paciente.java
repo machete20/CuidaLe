@@ -1,26 +1,22 @@
 package com.example.cuidale;
 
 public class Paciente {
-
     private String id;
     private String nombre;
     private String localizacion;
 
     // Constructor vacío requerido por Firebase
-    public Paciente() {
-    }
+    public Paciente() {}
 
-    public Paciente(String id, String nombre, String localizacion) {
-        this.id = id;
+    public Paciente(String nombre, String localizacion) {
         this.nombre = nombre;
         this.localizacion = localizacion;
     }
 
-    // Getters y Setters
+    // Getters y setters
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -28,7 +24,6 @@ public class Paciente {
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -36,7 +31,6 @@ public class Paciente {
     public String getLocalizacion() {
         return localizacion;
     }
-
     public void setLocalizacion(String localizacion) {
         this.localizacion = localizacion;
     }

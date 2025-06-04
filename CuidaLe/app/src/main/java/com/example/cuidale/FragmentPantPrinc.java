@@ -127,48 +127,59 @@ public class FragmentPantPrinc extends Fragment {
     private void obtenerDatosUsuario() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        // Verificar si el usuario está autenticado
         if (user != null) {
-            Log.d("Firebase", "Usuario autenticado"); // Verifica si el usuario está autenticado
             String uid = user.getUid();
 
-            // Actualizamos la URL para la base de datos de Firebase
             FirebaseDatabase database = FirebaseDatabase.getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app");
-            DatabaseReference ref = database.getReference("usuarios").child(uid);
+            DatabaseReference refCuidador = database.getReference("usuarios").child(uid);
 
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            refCuidador.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        Log.d("Firebase", "Datos encontrados en Firebase"); // Si los datos existen
+                public void onDataChange(@NonNull DataSnapshot snapshotCuidador) {
+                    if (snapshotCuidador.exists()) {
+                        // Obtener UID del paciente asignado
+                        String pacienteUID = snapshotCuidador.child("pacienteAsignadoUID").getValue(String.class);
 
-                        // Si los datos del usuario existen en la base de datos
-                        String nombre = snapshot.child("nombre").getValue(String.class);
-                        String dir = snapshot.child("direccion").getValue(String.class);
+                        if (pacienteUID != null && !pacienteUID.isEmpty()) {
+                            // Obtener datos del paciente
+                            DatabaseReference refPaciente = database.getReference("usuarios").child(pacienteUID);
+                            refPaciente.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshotPaciente) {
+                                    if (snapshotPaciente.exists()) {
+                                        String nombrePaciente = snapshotPaciente.child("nombre").getValue(String.class);
+                                        String direccionPaciente = snapshotPaciente.child("direccion").getValue(String.class);
 
-                        // Asegurarse de actualizar las vistas con los datos obtenidos en el hilo principal
-                        requireActivity().runOnUiThread(() -> {
-                            nomUsu.setText(nombre);
-                            dirUsu.setText(dir);
-                        });
+                                        requireActivity().runOnUiThread(() -> {
+                                            nomUsu.setText(nombrePaciente);
+                                            dirUsu.setText(direccionPaciente);
+                                        });
+                                    } else {
+                                        Toast.makeText(getContext(), "No se encontraron datos del paciente", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Toast.makeText(getContext(), "Error al cargar datos del paciente: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getContext(), "No hay paciente asignado a este cuidador", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        // Si no se encuentran datos para este usuario
-                        Log.d("Firebase", "No se encontraron datos para este usuario");
-                        Toast.makeText(getContext(), "No se encontraron datos para este usuario", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "No se encontraron datos para este cuidador", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    // Si ocurre un error al consultar la base de datos
-                    Log.e("Firebase", "Error al consultar los datos: " + error.getMessage());
-                    Toast.makeText(getContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error al consultar cuidador: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
-            // Si el usuario no está autenticado
-            Log.d("Firebase", "No hay usuario autenticado");
             Toast.makeText(getContext(), "No hay usuario autenticado", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

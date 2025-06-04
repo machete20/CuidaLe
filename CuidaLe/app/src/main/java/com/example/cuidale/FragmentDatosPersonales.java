@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class FragmentDatosPersonales extends Fragment {
 
-    private EditText etNombre, etPrimerApellido, etSegundoApellido, etDNI, etDireccion, etCorreo;
+    private EditText etNombre, etDNI, etDireccion, etCorreo;
     private ImageButton btnBack;
     private Button btnGuardar;
     private DatabaseReference userRef;
@@ -35,8 +35,6 @@ public class FragmentDatosPersonales extends Fragment {
 
         // Enlazar vistas
         etNombre = v.findViewById(R.id.EditTextNombre);
-        etPrimerApellido = v.findViewById(R.id.EditTextPrimerApellido);
-        etSegundoApellido = v.findViewById(R.id.EditTextSegundoApellido);
         etDNI = v.findViewById(R.id.EditTextDNI);
         etDireccion = v.findViewById(R.id.EditTextDireccion);
         etCorreo = v.findViewById(R.id.EditTextCorreo);
@@ -49,19 +47,11 @@ public class FragmentDatosPersonales extends Fragment {
             navController.popBackStack();
         });
 
-        // Obtener DNI de SharedPreferences
-        SharedPreferences prefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String dni = prefs.getString("dni", null);
-
-        // 🔴 CAMBIO CLAVE: ahora accedemos a usuarios/UID
-        if (dni != null) {
-            String uid = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser().getUid();
-            userRef = FirebaseDatabase.getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
-                    .getReference("usuarios").child(uid);
-            cargarDatosUsuario();
-        } else {
-            Toast.makeText(getContext(), "No se encontró el DNI. Vuelve a registrarte.", Toast.LENGTH_SHORT).show();
-        }
+        // Obtener UID del usuario actual
+        String uid = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userRef = FirebaseDatabase.getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference("usuarios").child(uid);
+        cargarDatosUsuario();
 
         // Botón guardar
         btnGuardar.setOnClickListener(v1 -> guardarDatosUsuario());
@@ -77,16 +67,12 @@ public class FragmentDatosPersonales extends Fragment {
                     String nombre = snapshot.child("nombre").getValue(String.class);
                     String correo = snapshot.child("correo").getValue(String.class);
                     String dni = snapshot.child("dni").getValue(String.class);
+                    String direccion = snapshot.child("direccion").getValue(String.class);
 
                     etNombre.setText(nombre);
                     etCorreo.setText(correo);
                     etDNI.setText(dni);
-
-                    // Cargar también los nuevos campos si existen
-                    etPrimerApellido.setText(snapshot.child("primerApellido").getValue(String.class));
-                    etSegundoApellido.setText(snapshot.child("segundoApellido").getValue(String.class));
-                    etDireccion.setText(snapshot.child("direccion").getValue(String.class));
-
+                    etDireccion.setText(direccion);
                 } else {
                     Toast.makeText(getContext(), "No se encontraron datos para este usuario.", Toast.LENGTH_SHORT).show();
                 }
@@ -102,15 +88,19 @@ public class FragmentDatosPersonales extends Fragment {
     private void guardarDatosUsuario() {
         String nombre = etNombre.getText().toString().trim();
         String correo = etCorreo.getText().toString().trim();
-        String primerApellido = etPrimerApellido.getText().toString().trim();
-        String segundoApellido = etSegundoApellido.getText().toString().trim();
         String direccion = etDireccion.getText().toString().trim();
         String dni = etDNI.getText().toString().trim();
 
-        // Validaciones
+        // Validaciones básicas
         if (nombre.isEmpty()) {
             etNombre.setError("Introduce un nombre");
             etNombre.requestFocus();
+            return;
+        }
+
+        if (dni.isEmpty()) {
+            etDNI.setError("Introduce un DNI");
+            etDNI.requestFocus();
             return;
         }
 
@@ -129,8 +119,6 @@ public class FragmentDatosPersonales extends Fragment {
         // Guardar en Firebase
         userRef.child("nombre").setValue(nombre);
         userRef.child("correo").setValue(correo);
-        userRef.child("primerApellido").setValue(primerApellido);
-        userRef.child("segundoApellido").setValue(segundoApellido);
         userRef.child("direccion").setValue(direccion);
         userRef.child("dni").setValue(dni);
 

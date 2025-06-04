@@ -129,12 +129,13 @@
         app:layout_constraintTop_toBottomOf="@+id/cambiar">
 
         <LinearLayout
-            android:id="@+id/containerPacientes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:id="@+id/containerPacientes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+    </LinearLayout>
 
-        </LinearLayout>
     </ScrollView>
 
     <!-- Second Contact -->
