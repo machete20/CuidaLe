@@ -14,6 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class AgregarPacienteFragment extends Fragment {
 
     private EditText etNombrePaciente, etUbicacionPaciente;
@@ -48,13 +52,37 @@ public class AgregarPacienteFragment extends Fragment {
             }
 
             Paciente paciente = new Paciente(nombre, ubicacion);
-            FirebaseDataManager.getInstance().guardarPaciente(paciente);
 
-            Toast.makeText(getContext(), "Paciente agregado", Toast.LENGTH_SHORT).show();
+            DatabaseReference refPacientesGlobal = FirebaseDatabase.getInstance(
+                            "https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
+                    .getReference("pacientes");
 
-            // Navegar atrás al listado de pacientes
-            NavController navController = Navigation.findNavController(v);
-            navController.popBackStack();
+            // Generar ID único para el paciente
+            String pacienteId = refPacientesGlobal.push().getKey();
+            if (pacienteId == null) {
+                Toast.makeText(getContext(), "Error al generar ID para paciente", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            paciente.setId(pacienteId);
+
+            // Guardar paciente en nodo global
+            refPacientesGlobal.child(pacienteId).setValue(paciente)
+                    .addOnSuccessListener(aVoid -> {
+                        // Asignar paciente al cuidador actual
+                        String cuidadorUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        DatabaseReference refPacientesCuidador = FirebaseDatabase.getInstance(
+                                        "https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
+                                .getReference("usuarios").child(cuidadorUID).child("pacientes");
+
+                        refPacientesCuidador.child(pacienteId).setValue(paciente)
+                                .addOnSuccessListener(aVoid2 -> {
+                                    Toast.makeText(getContext(), "Paciente agregado y asignado correctamente", Toast.LENGTH_SHORT).show();
+                                    NavController navController = Navigation.findNavController(v);
+                                    navController.popBackStack();
+                                })
+                                .addOnFailureListener(e -> Toast.makeText(getContext(), "Error al asignar paciente: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Error al guardar paciente: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         });
 
         return view;

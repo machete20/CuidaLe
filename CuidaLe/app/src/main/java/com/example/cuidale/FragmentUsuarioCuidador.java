@@ -1,7 +1,6 @@
 package com.example.cuidale;
 
 import android.app.AlertDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,8 +37,7 @@ public class FragmentUsuarioCuidador extends Fragment {
     private LinearLayout contenedorPacientes;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_usuariocuidador, container, false);
 
         contenedorPacientes = v.findViewById(R.id.containerPacientes);
@@ -79,9 +77,7 @@ public class FragmentUsuarioCuidador extends Fragment {
             manager.cerrarSesion();
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.fragmentInicioSes, null,
-                    new NavOptions.Builder()
-                            .setPopUpTo(R.id.fragmentInicioSes, true)
-                            .build());
+                    new NavOptions.Builder().setPopUpTo(R.id.fragmentInicioSes, true).build());
         });
 
         return v;
@@ -95,13 +91,10 @@ public class FragmentUsuarioCuidador extends Fragment {
 
     private void obtenerDatosUsuario() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
         if (user != null) {
-            Log.d("Firebase", "Usuario autenticado");
             String uid = user.getUid();
-
-            FirebaseDatabase database = FirebaseDatabase.getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app");
-            DatabaseReference ref = database.getReference("usuarios").child(uid);
+            DatabaseReference ref = FirebaseDatabase.getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
+                    .getReference("usuarios").child(uid);
 
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -147,7 +140,7 @@ public class FragmentUsuarioCuidador extends Fragment {
                 for (DataSnapshot snapshot : task.getResult().getChildren()) {
                     Paciente paciente = snapshot.getValue(Paciente.class);
                     if (paciente != null) {
-                        paciente.setId(snapshot.getKey()); // asignar id
+                        paciente.setId(snapshot.getKey());
                         View card = crearVistaPaciente(paciente);
                         contenedorPacientes.addView(card, 0);
                     }
@@ -166,6 +159,7 @@ public class FragmentUsuarioCuidador extends Fragment {
         TextView localizacion = vista.findViewById(R.id.txtLocalizacionPaciente);
         ImageView imagen = vista.findViewById(R.id.imgPaciente);
         ImageButton btnEliminar = vista.findViewById(R.id.btnEliminarPaciente);
+        ImageButton btnUsar = vista.findViewById(R.id.btnUsarPaciente);
 
         nombre.setText(paciente.getNombre());
         localizacion.setText(paciente.getLocalizacion());
@@ -180,6 +174,31 @@ public class FragmentUsuarioCuidador extends Fragment {
                     .show();
         });
 
+        btnUsar.setOnClickListener(v -> {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user == null) return;
+
+            String uid = user.getUid();
+            DatabaseReference ref = FirebaseDatabase
+                    .getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
+                    .getReference("usuarios").child(uid).child("pacienteSeleccionado");
+
+            // Guardar paciente seleccionado en Firebase
+            ref.setValue(paciente).addOnSuccessListener(aVoid -> {
+                Toast.makeText(getContext(), "Paciente seleccionado: " + paciente.getNombre(), Toast.LENGTH_SHORT).show();
+
+                // Pasar datos del paciente a pantalla principal mediante Bundle
+                Bundle bundle = new Bundle();
+                bundle.putString("nombrePaciente", paciente.getNombre());
+                bundle.putString("ubicacionPaciente", paciente.getLocalizacion());
+
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.fragmentPantPrinc, bundle);
+            }).addOnFailureListener(e -> {
+                Toast.makeText(getContext(), "Error al seleccionar paciente", Toast.LENGTH_SHORT).show();
+            });
+        });
+
         return vista;
     }
 
@@ -188,7 +207,6 @@ public class FragmentUsuarioCuidador extends Fragment {
         if (user == null) return;
 
         String uid = user.getUid();
-
         DatabaseReference ref = FirebaseDatabase
                 .getInstance("https://cuidale-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("usuarios").child(uid).child("pacientes").child(pacienteId);

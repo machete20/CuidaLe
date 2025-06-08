@@ -130,7 +130,8 @@
                     android:layout_gravity="center"
                     android:layout_margin="10sp"
                     android:src="@drawable/receta"
-                    tools:srcCompat="@drawable/notebook" />
+                    app:srcCompat="@drawable/receta"
+                    tools:srcCompat="@drawable/receta" />
 
                 <TextView
                     android:id="@+id/RecetasPrincp"
@@ -212,7 +213,8 @@
                     android:layout_gravity="center"
                     android:layout_margin="10sp"
                     android:src="@drawable/pastillero"
-                    tools:srcCompat="@drawable/pill" />
+                    app:srcCompat="@drawable/pastillero"
+                    tools:srcCompat="@drawable/pastillero" />
 
                 <TextView
                     android:id="@+id/PastilleroPrincp"
@@ -254,7 +256,8 @@
                     android:layout_gravity="center"
                     android:layout_margin="10sp"
                     android:src="@drawable/recordatorio"
-                    tools:srcCompat="@drawable/alarmclock" />
+                    app:srcCompat="@drawable/recordatorio"
+                    tools:srcCompat="@drawable/recordatorio" />
 
                 <TextView
                     android:id="@+id/RecordatorioPrincp"
@@ -278,10 +281,8 @@
             android:layout_height="136dp"
             android:layout_marginStart="35dp"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
             android:backgroundTint="@color/boton"
             app:cardCornerRadius="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CardPastillero">
 
@@ -298,7 +299,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="10sp"
                     android:src="@drawable/historial"
-                    tools:srcCompat="@drawable/history" />
+                    tools:srcCompat="@drawable/historial" />
 
                 <TextView
                     android:id="@+id/HistorialPrincp"
@@ -322,10 +323,8 @@
             android:layout_height="136dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="35dp"
-            android:layout_marginBottom="40dp"
             android:backgroundTint="@color/boton"
             app:cardCornerRadius="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CardPastillero">
 
@@ -342,7 +341,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="10sp"
                     android:src="@drawable/calendario"
-                    tools:srcCompat="@drawable/calendar" />
+                    tools:srcCompat="@drawable/calendario" />
 
                 <TextView
                     android:id="@+id/CalendarioPrincp"
