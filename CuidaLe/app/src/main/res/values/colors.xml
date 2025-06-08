@@ -2,8 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="fondo">#EEFAFF</color>
+    <color name="fondo">#E6F5FB</color>
     <color name="boton">#A0DFF7</color>
+    <color name="stroke">#62A7C2</color>
 
     <color name="light_medium_blue">#A0DFF7</color>
     <color name="sky_blue">#87CEEB</color>

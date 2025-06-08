@@ -157,17 +157,43 @@ public class FirebaseDataManager {
 
     // === PACIENTES ===
 
-    public void guardarPaciente(Paciente pacientes) {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference ref = usuariosRef.child(uid).child("pacientes");
-        String key = ref.push().getKey();
-        if (key != null) {
-            pacientes.setId(key);
-            ref.child(key).setValue(pacientes)
-                    .addOnSuccessListener(aVoid -> Log.d("FirebaseDataManager", "✅ Paciente guardado"))
-                    .addOnFailureListener(e -> Log.e("FirebaseDataManager", "❌ Error: " + e.getMessage()));
+    public void guardarPaciente(Paciente paciente, OnPacienteGuardadoListener listener) {
+        DatabaseReference ref = usuariosRef;  // Guarda directamente en "usuarios"
+        String pacienteUID = ref.push().getKey();  // Generar UID único para paciente
+
+        if (pacienteUID != null) {
+            paciente.setId(pacienteUID);
+            ref.child(pacienteUID).setValue(paciente)
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d("FirebaseDataManager", "✅ Paciente guardado con UID: " + pacienteUID);
+                        listener.onSuccess(pacienteUID);
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("FirebaseDataManager", "❌ Error guardando paciente: " + e.getMessage());
+                        listener.onFailure(e.getMessage());
+                    });
         } else {
             Log.e("FirebaseDataManager", "❌ Error generando clave para paciente");
+            listener.onFailure("Error generando clave para paciente");
         }
     }
+
+    public void asignarPacienteACuidador(String cuidadorUID, String pacienteUID, OnAsignacionListener listener) {
+        usuariosRef.child(cuidadorUID).child("pacienteAsignadoUID").setValue(pacienteUID)
+                .addOnSuccessListener(aVoid -> listener.onSuccess())
+                .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
+    }
+
+    public interface OnPacienteGuardadoListener {
+        void onSuccess(String pacienteUID);
+        void onFailure(String error);
+    }
+
+    public interface OnAsignacionListener {
+        void onSuccess();
+        void onFailure(String error);
+    }
+
+
+
 }
