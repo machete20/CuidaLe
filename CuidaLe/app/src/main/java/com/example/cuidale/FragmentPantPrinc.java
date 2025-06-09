@@ -127,7 +127,7 @@ public class FragmentPantPrinc extends Fragment {
                                 }
                             });
                         } else {
-                            mostrarToast("No hay paciente asignado a este cuidador");
+                            //mostrarToast("No hay paciente asignado a este cuidador");
                             requireActivity().runOnUiThread(() -> {
                                 nomUsu.setText("Sin paciente asignado");
                                 dirUsu.setText("");
