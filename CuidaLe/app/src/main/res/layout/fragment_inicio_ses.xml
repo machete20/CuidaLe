@@ -15,6 +15,7 @@
             android:id="@+id/bInicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:backgroundTint="@color/boton"
             android:onClick="inicioSesion"
             android:text="@string/botonInicioSesion"
@@ -24,8 +25,10 @@
             app:cornerRadius="20px"
             app:layout_constraintBottom_toTopOf="@+id/bRegistro"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contrasena"
+            app:layout_constraintVertical_bias="0.857"
             app:strokeColor="@color/stroke"
             app:strokeWidth="2px" />
 
@@ -43,8 +46,8 @@
         <Button
             android:id="@+id/bRegistro"
             android:layout_width="wrap_content"
-            android:layout_height="120px"
-            android:layout_marginBottom="50dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="60dp"
             android:backgroundTint="@color/fondo"
             android:onClick="pantallaRegistro"
             android:text="@string/botonRegistro2"
@@ -54,7 +57,7 @@
             app:cornerRadius="20px"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -74,13 +77,13 @@
 
         <EditText
             android:id="@+id/usuario"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ems="10"
             android:inputType="text"
             android:minHeight="48dp"
-            android:textSize="24sp"
+            android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,19 +94,19 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="28dp"
             android:text="@string/Password"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/usuario" />
 
         <EditText
             android:id="@+id/contrasena"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ems="10"

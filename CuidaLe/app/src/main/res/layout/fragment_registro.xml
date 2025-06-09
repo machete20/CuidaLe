@@ -175,7 +175,7 @@
         <Button
             android:id="@+id/bInicioR"
             android:layout_width="wrap_content"
-            android:layout_height="120px"
+            android:layout_height="48dp"
             android:layout_marginBottom="50dp"
             android:backgroundTint="@color/fondo"
             android:onClick="pantallaRegistro"
