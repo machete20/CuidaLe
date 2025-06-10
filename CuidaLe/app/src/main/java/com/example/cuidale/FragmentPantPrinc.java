@@ -57,21 +57,29 @@ public class FragmentPantPrinc extends Fragment {
         historial.setOnClickListener(v -> navegar(v, R.id.fragmentHistorial));
         calendario.setOnClickListener(v -> navegar(v, R.id.fragmentCalendario));
 
+        // 👇 Nuevo bloque: Recibir datos desde Bundle si los hay
+        Bundle bundle = getArguments();
+        if (bundle != null && bundle.containsKey("nombrePaciente") && bundle.containsKey("ubicacionPaciente")) {
+            String nombre = bundle.getString("nombrePaciente");
+            String ubicacion = bundle.getString("ubicacionPaciente");
+
+            nomUsu.setText(nombre != null ? nombre : "Sin nombre");
+            dirUsu.setText(ubicacion != null ? ubicacion : "Sin dirección");
+        } else {
+            // Si no hay datos en el bundle, cargamos desde Firebase como respaldo
+            obtenerDatosUsuario();
+        }
+
         return v;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // Puedes mantenerlo si quieres que cargue también aquí
-        obtenerDatosUsuario();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Recarga datos cada vez que vuelve a mostrarse el fragmento
-        obtenerDatosUsuario();
+        // Si no se recibió bundle, recargar desde Firebase
+        if (getArguments() == null) {
+            obtenerDatosUsuario();
+        }
     }
 
     private void navegar(View v) {
@@ -113,7 +121,6 @@ public class FragmentPantPrinc extends Fragment {
                                         });
                                     } else {
                                         mostrarToast("No se encontraron datos del paciente");
-                                        // Opcional: limpiar texto si no hay paciente
                                         requireActivity().runOnUiThread(() -> {
                                             nomUsu.setText("Sin paciente asignado");
                                             dirUsu.setText("");
@@ -127,7 +134,6 @@ public class FragmentPantPrinc extends Fragment {
                                 }
                             });
                         } else {
-                            //mostrarToast("No hay paciente asignado a este cuidador");
                             requireActivity().runOnUiThread(() -> {
                                 nomUsu.setText("Sin paciente asignado");
                                 dirUsu.setText("");
