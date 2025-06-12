@@ -40,9 +40,22 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.RecetaView
         );
 
         holder.itemView.setOnClickListener(v -> {
-            notifyItemChanged(selectedPosition);
-            selectedPosition = holder.getAdapterPosition();
-            notifyItemChanged(selectedPosition);
+            int oldPosition = selectedPosition;
+            if (selectedPosition == holder.getAdapterPosition()) {
+                // Deseleccionar si se hace clic en el mismo elemento
+                selectedPosition = RecyclerView.NO_POSITION;
+            } else {
+                // Seleccionar nuevo elemento
+                selectedPosition = holder.getAdapterPosition();
+            }
+
+            // Actualizar ambas posiciones
+            if (oldPosition != RecyclerView.NO_POSITION) {
+                notifyItemChanged(oldPosition);
+            }
+            if (selectedPosition != RecyclerView.NO_POSITION) {
+                notifyItemChanged(selectedPosition);
+            }
         });
     }
 
@@ -52,17 +65,44 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.RecetaView
     }
 
     public Receta getSelectedReceta() {
-        if (selectedPosition != RecyclerView.NO_POSITION && selectedPosition < recetaList.size()) {
+        if (selectedPosition != RecyclerView.NO_POSITION &&
+                selectedPosition >= 0 &&
+                selectedPosition < recetaList.size()) {
             return recetaList.get(selectedPosition);
         }
         return null;
     }
 
     public void eliminarSeleccionada() {
-        if (selectedPosition != RecyclerView.NO_POSITION && selectedPosition < recetaList.size()) {
+        if (selectedPosition != RecyclerView.NO_POSITION &&
+                selectedPosition >= 0 &&
+                selectedPosition < recetaList.size()) {
+
             recetaList.remove(selectedPosition);
             notifyItemRemoved(selectedPosition);
+
+            // Reajustar la selección después de eliminar
+            if (selectedPosition >= recetaList.size()) {
+                selectedPosition = RecyclerView.NO_POSITION;
+            } else {
+                // Mantener la selección válida si hay elementos después
+                notifyItemRangeChanged(selectedPosition, recetaList.size() - selectedPosition);
+            }
+
+            // Limpiar selección
             selectedPosition = RecyclerView.NO_POSITION;
+        }
+    }
+
+    public int getSelectedPosition() {
+        return selectedPosition;
+    }
+
+    public void clearSelection() {
+        int oldPosition = selectedPosition;
+        selectedPosition = RecyclerView.NO_POSITION;
+        if (oldPosition != RecyclerView.NO_POSITION) {
+            notifyItemChanged(oldPosition);
         }
     }
 

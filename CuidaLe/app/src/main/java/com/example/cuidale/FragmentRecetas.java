@@ -51,15 +51,16 @@ public class FragmentRecetas extends Fragment {
         btnEliminar.setOnClickListener(view -> {
             Receta seleccionada = adapter.getSelectedReceta();
             if (seleccionada != null) {
-                recetas.remove(seleccionada);
-                RecetaStorage.guardarRecetas(requireContext(), recetas);
+                // Usar solo el método del adapter
                 adapter.eliminarSeleccionada();
+
+                // Guardar la lista actualizada
+                RecetaStorage.guardarRecetas(requireContext(), recetas);
                 Toast.makeText(getContext(), "Receta eliminada", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getContext(), "Selecciona una receta", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Selecciona una receta primero", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         return v;
     }
